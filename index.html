@@ -903,6 +903,20 @@ function resolveTie(i) {
 function renderResult(a) {
   const rk = st.result;
   const d = SUBS[rk];
+
+  // ── 환자 응답 데이터 수집 ──────────────────────────────
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzX6NouJw3s5evArwuxF1CDRWWnYNdGRng7iX0RlScckiy9F_7FfSC1B_74UII9HOdjhQ/exec';
+  fetch(SHEET_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      gender : st.gender,
+      result : st.result,
+      grade  : st.confirmedGrade || 'A',
+      scores : st.sc,
+      answers: st.ans
+    })
+  }).catch(() => {});
+  // ────────────────────────────────────────────────────
   const col = MAIN_COL[d.main] || '#7A9E7E';
 
   const sorted = ALL_SUBS.map(k=>({k,v:st.sc[k]})).sort((a,b)=>b.v-a.v);
