@@ -3,247 +3,293 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>나를 위한 건강지도 : 자가 진단법</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>나를 위한 건강지도 · 체질 자가 진단</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --sage:#7A9E7E;--sage-light:#A8C5A0;--sage-dark:#4E7053;
-  --beige:#F5F0E8;--beige-mid:#E8DFD0;--beige-dark:#C8B89A;
-  --cream:#FDFAF4;--text-dark:#3A3028;--text-mid:#6B5C50;--text-light:#9B8B7E;
-  --orange-soft:#E8A87C;
+  --ink:#1C1A17;--ink-mid:#4A4540;--ink-light:#8A7E74;--ink-faint:#BDB3A8;
+  --paper:#F7F3EC;--paper-mid:#EDE6D8;--paper-dark:#D8CEBC;
+  --sage:#5C7C5E;--sage-light:#8EAD8E;--sage-pale:#D6E6D6;
+  --rust:#9E5A3A;--rust-light:#C4845C;--rust-pale:#F0DDD4;
+  --cobalt:#3A5A8A;--cobalt-light:#6A8AB8;--cobalt-pale:#D4DFF0;
+  --gold:#8A7040;--gold-light:#B89A60;--gold-pale:#EDE0C4;
+  --r:20px;
 }
-html,body{width:100%;min-height:100vh;background:var(--beige);font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;color:var(--text-dark)}
-#app{min-height:100vh;background:linear-gradient(155deg,#EDF2EC 0%,#F5F0E8 55%,#EDE4D6 100%)}
-.hdr{background:rgba(253,250,244,0.97);border-bottom:1px solid var(--beige-dark);padding:14px 24px;text-align:center;position:sticky;top:0;z-index:50;backdrop-filter:blur(8px)}
-.hdr-t{font-family:'Noto Serif KR',Georgia,serif;font-size:17px;font-weight:600;color:var(--sage-dark);letter-spacing:1px}
-.hdr-s{font-size:10px;color:var(--text-light);margin-top:3px;letter-spacing:1px}
-.pbar-w{width:100%;height:3px;background:var(--beige-dark)}
-.pbar-f{height:100%;background:var(--sage-dark);transition:width .5s ease}
-.wrap{display:flex;justify-content:center;padding:28px 20px;min-height:calc(100vh - 80px)}
-.inner{width:100%;max-width:740px}
+html,body{width:100%;min-height:100vh;background:var(--paper);font-family:'Noto Sans KR',sans-serif;color:var(--ink)}
 
-/* GENDER SELECT */
-.gender-card{background:var(--cream);border:1px solid var(--beige-dark);border-radius:20px;padding:48px 40px;text-align:center}
-.gender-title{font-family:'Noto Serif KR',serif;font-size:22px;color:var(--sage-dark);margin-bottom:8px}
-.gender-sub{font-size:13px;color:var(--text-light);margin-bottom:36px;line-height:1.7}
-.gender-btns{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:360px;margin:0 auto}
-.g-btn{background:#fff;border:1.5px solid var(--beige-dark);border-radius:16px;padding:28px 20px;font-size:18px;cursor:pointer;text-align:center;color:var(--text-dark);transition:all .2s;font-family:'Noto Sans KR',sans-serif}
-.g-btn:hover{border-color:var(--sage-dark);background:rgba(78,112,83,.06)}
-.g-icon{font-size:32px;margin-bottom:8px}
+/* ── 헤더 ── */
+#hdr{
+  position:sticky;top:0;z-index:100;
+  background:rgba(247,243,236,0.96);
+  border-bottom:1px solid var(--paper-dark);
+  backdrop-filter:blur(10px);
+  padding:0 24px;
+}
+.hdr-inner{max-width:780px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--sage);letter-spacing:.5px}
+.logo span{color:var(--ink-light);font-weight:300;font-size:12px;margin-left:8px}
+.pbar-w{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--paper-dark)}
+.pbar-f{height:100%;background:linear-gradient(90deg,var(--sage),var(--sage-light));transition:width .5s ease;border-radius:0 2px 2px 0}
 
-/* START */
-.start-card{background:var(--cream);border:1px solid var(--beige-dark);border-radius:20px;padding:52px 44px;text-align:center;animation:fadeUp .4s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.si{font-size:48px;margin-bottom:18px}
-.st{font-family:'Noto Serif KR',serif;font-size:13px;color:var(--text-light);letter-spacing:2px;margin-bottom:6px}
-.st2{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:600;color:var(--sage-dark);margin-bottom:24px;letter-spacing:1px;line-height:1.4}
-.sd{font-size:13px;color:var(--text-mid);line-height:1.9;margin-bottom:32px}
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px}
-.sc{background:var(--beige);border-radius:10px;padding:14px;text-align:center}
-.sl{font-size:10px;color:var(--text-light);margin-bottom:5px}
-.sv{font-size:14px;font-weight:500;color:var(--text-dark)}
-.btn-s{width:100%;background:var(--sage-dark);border:none;border-radius:12px;padding:17px;font-size:16px;color:#fff;cursor:pointer;font-family:'Noto Serif KR',serif;font-weight:600;letter-spacing:1px;transition:background .2s}
-.btn-s:hover{background:var(--sage)}
-.disc-s{font-size:10px;color:var(--text-light);margin-top:14px;line-height:1.7}
+/* ── 레이아웃 ── */
+.page{min-height:calc(100vh - 56px);display:flex;justify-content:center;align-items:flex-start;padding:32px 20px 64px}
+.inner{width:100%;max-width:680px}
 
-/* SECTION HEADER */
-.sec-hdr{background:var(--beige);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:11px;color:var(--text-mid);letter-spacing:1px;border-left:3px solid var(--sage)}
-.sec-hdr b{color:var(--sage-dark)}
+/* ── 카드 기본 ── */
+.card{background:#fff;border:1px solid var(--paper-dark);border-radius:var(--r);overflow:hidden;animation:up .35s ease}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-/* QUESTION CARD */
-.q-card{background:var(--cream);border:1px solid var(--beige-dark);border-radius:20px;padding:38px 36px;animation:fadeUp .3s ease}
-.q-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;font-size:10px;letter-spacing:1.5px;margin-bottom:16px;font-weight:500;color:#fff}
-.q-num{font-size:11px;color:var(--text-light);margin-bottom:8px}
-.q-text{font-family:'Noto Serif KR',serif;font-size:21px;font-weight:400;color:var(--text-dark);line-height:1.75;margin-bottom:8px}
-.q-hint{font-size:12px;color:var(--text-light);padding:10px 14px;background:var(--beige);border-radius:8px;border-left:2px solid var(--beige-dark);margin-bottom:22px;line-height:1.65}
-.opts{display:flex;flex-direction:column;gap:10px}
-.opt{background:#fff;border:1.5px solid var(--beige-dark);border-radius:12px;padding:16px 20px;font-size:15px;color:var(--text-dark);cursor:pointer;text-align:left;display:flex;align-items:flex-start;gap:12px;line-height:1.6;transition:border-color .15s,background .15s;font-family:'Noto Sans KR',sans-serif}
-.opt:hover{border-color:var(--sage)}
-.opt.sel{border-color:var(--sage-dark);background:rgba(78,112,83,.07);color:var(--sage-dark)}
-.odot{width:18px;height:18px;border-radius:50%;border:2px solid var(--beige-dark);flex-shrink:0;margin-top:2px;transition:all .15s;background:#fff}
-.opt.sel .odot{background:var(--sage-dark);border-color:var(--sage-dark)}
-.bool-r{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.bbtn{background:#fff;border:1.5px solid var(--beige-dark);border-radius:14px;padding:24px 16px;font-size:17px;cursor:pointer;text-align:center;color:var(--text-dark);transition:all .18s;line-height:1.5;font-family:'Noto Sans KR',sans-serif}
-.bbtn:hover{border-color:var(--sage)}
-.bbtn.yes{border-color:var(--sage-dark);background:rgba(78,112,83,.07);color:var(--sage-dark);font-weight:600}
-.bbtn.no{border-color:var(--beige-dark);background:var(--beige);color:var(--text-mid)}
-.nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
-.btn-b{background:none;border:1.5px solid var(--beige-dark);border-radius:9px;padding:11px 22px;font-size:13px;color:var(--text-light);cursor:pointer;font-family:'Noto Sans KR',sans-serif}
-.btn-b:hover{border-color:var(--text-light);color:var(--text-dark)}
-.btn-b:disabled{opacity:.3;cursor:not-allowed}
-.btn-n{background:var(--sage-dark);border:none;border-radius:9px;padding:13px 30px;font-size:14px;color:#fff;cursor:pointer;font-weight:500;transition:background .2s;font-family:'Noto Sans KR',sans-serif}
-.btn-n:hover{background:var(--sage)}
-.btn-n:disabled{background:var(--beige-dark);cursor:not-allowed}
+/* ── 시작 화면 ── */
+.start-hero{padding:52px 44px 32px;text-align:center;border-bottom:1px solid var(--paper-mid)}
+.start-eye{font-size:11px;letter-spacing:3px;color:var(--sage);margin-bottom:14px;font-weight:500}
+.start-t{font-family:'Noto Serif KR',serif;font-size:32px;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:16px}
+.start-d{font-size:13px;color:var(--ink-light);line-height:1.9;max-width:380px;margin:0 auto 28px}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px}
+.tag{font-size:11px;padding:5px 13px;border-radius:20px;letter-spacing:.5px}
+.tag-g{background:var(--sage-pale);color:var(--sage)}
+.tag-r{background:var(--rust-pale);color:var(--rust)}
+.tag-b{background:var(--cobalt-pale);color:var(--cobalt)}
+.tag-o{background:var(--gold-pale);color:var(--gold)}
+.start-body{padding:28px 44px 36px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.info-cell{background:var(--paper);border-radius:12px;padding:16px;text-align:center}
+.ic-l{font-size:10px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:6px}
+.ic-v{font-size:15px;font-weight:600;color:var(--ink-mid)}
 
-/* VISUAL BOX */
-.vis-box{background:var(--beige);border:1.5px dashed var(--beige-dark);border-radius:12px;padding:16px;margin-bottom:20px}
-.vis-label{font-size:10px;color:var(--text-light);letter-spacing:1px;margin-bottom:10px}
-.stool-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.stool-lbl{font-size:11px;color:var(--text-mid);width:56px;text-align:right;flex-shrink:0}
-.stool-bar{border-radius:20px}
-.stool-desc{font-size:11px;color:var(--text-light)}
-.img-placeholder{background:linear-gradient(135deg,rgba(122,158,126,.12) 0%,rgba(200,184,154,.15) 100%);border:1.5px dashed var(--sage);border-radius:12px;padding:28px 16px;text-align:center;margin-bottom:20px}
-.img-ph-icon{font-size:28px;margin-bottom:6px;opacity:.5}
-.img-ph-text{font-size:11px;color:var(--text-light);letter-spacing:.5px}
+/* 성별 선택 */
+.gender-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.gbtn{background:var(--paper);border:1.5px solid var(--paper-dark);border-radius:14px;padding:22px 16px;font-size:15px;cursor:pointer;text-align:center;color:var(--ink-mid);transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.gbtn:hover,.gbtn.sel{border-color:var(--sage);background:var(--sage-pale);color:var(--sage)}
+.gbtn-ico{font-size:26px;margin-bottom:8px}
+.gbtn-sub{font-size:10px;color:var(--ink-faint);margin-top:4px}
 
-/* TIE */
-.tie-card{background:var(--cream);border:2px solid var(--sage);border-radius:20px;padding:38px 36px;animation:fadeUp .3s ease}
-.tie-eye{font-size:10px;letter-spacing:2px;color:var(--sage-dark);font-weight:500;margin-bottom:8px}
-.tie-t{font-family:'Noto Serif KR',serif;font-size:20px;color:var(--text-dark);margin-bottom:6px}
-.tie-s{font-size:12px;color:var(--text-light);margin-bottom:22px;line-height:1.6}
-.tie-q{font-family:'Noto Serif KR',serif;font-size:18px;color:var(--text-dark);margin-bottom:22px;line-height:1.65}
+.btn-start{width:100%;background:var(--ink);border:none;border-radius:12px;padding:17px;font-size:15px;color:#fff;cursor:pointer;font-family:'Noto Serif KR',serif;font-weight:600;letter-spacing:1px;transition:background .2s}
+.btn-start:hover{background:var(--sage)}
+.btn-start:disabled{background:var(--paper-dark);color:var(--ink-faint);cursor:not-allowed}
+.disc{font-size:11px;color:var(--ink-faint);text-align:center;margin-top:12px;line-height:1.7}
 
-/* RESULT */
-.res-wrap{animation:fadeUp .4s ease}
-.res-gauge-section{background:var(--cream);border:1px solid var(--beige-dark);border-radius:20px;padding:36px 36px 28px;margin-bottom:14px;text-align:center}
-.gauge-grade{font-size:13px;letter-spacing:2px;margin-bottom:6px;font-weight:500}
-.gauge-msg{font-size:18px;font-family:'Noto Serif KR',serif;color:var(--text-dark);margin-bottom:4px}
-.gauge-sub{font-size:12px;color:var(--text-light);margin-top:6px}
+/* ── 문항 ── */
+.sec-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sec-name{font-size:11px;letter-spacing:1.5px;font-weight:500}
+.sec-desc{font-size:11px;color:var(--ink-faint)}
 
-.res-emblem-section{background:var(--cream);border:1px solid var(--beige-dark);border-radius:20px;padding:32px 36px;margin-bottom:14px;text-align:center}
-.emblem-wrap{display:flex;justify-content:center;margin-bottom:20px}
-.res-main-type{font-size:12px;letter-spacing:1px;margin-bottom:4px;font-weight:500}
-.res-sub-type{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:600;color:var(--text-dark);line-height:1.35;margin-bottom:5px}
-.res-hanja{font-size:13px;color:var(--text-light);margin-bottom:14px}
-.res-desc{font-size:13px;color:var(--text-mid);line-height:1.9;padding:16px;background:var(--beige);border-radius:10px}
+.q-wrap{padding:36px 40px}
+.q-phase{font-size:10px;letter-spacing:2px;color:var(--ink-faint);margin-bottom:4px}
+.q-num{font-size:11px;color:var(--ink-faint);margin-bottom:10px}
+.q-text{font-family:'Noto Serif KR',serif;font-size:20px;line-height:1.75;color:var(--ink);margin-bottom:10px}
+.q-hint{font-size:12px;color:var(--ink-light);background:var(--paper);border-left:2px solid var(--paper-dark);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:22px;line-height:1.65}
 
-.score-section{background:var(--cream);border:1px solid var(--beige-dark);border-radius:16px;padding:24px 32px;margin-bottom:14px}
-.sec-l{font-size:10px;letter-spacing:2px;color:var(--text-light);padding-bottom:7px;border-bottom:1px solid var(--beige-dark);margin-bottom:14px}
-.sc-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.sc-nm{font-size:11px;color:var(--text-mid);width:90px;text-align:right;flex-shrink:0}
-.sc-tr{flex:1;height:8px;background:var(--beige-mid);border-radius:4px;overflow:hidden}
+/* 비교표 */
+.cmp-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px}
+.cmp-table th{background:var(--paper);padding:8px 12px;text-align:center;color:var(--ink-light);font-weight:500;letter-spacing:.5px;border:1px solid var(--paper-dark)}
+.cmp-table td{padding:9px 12px;border:1px solid var(--paper-mid);color:var(--ink-mid);text-align:center;line-height:1.5}
+.cmp-table tr:nth-child(even) td{background:var(--paper)}
+
+/* 선택지 */
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:#fff;border:1.5px solid var(--paper-dark);border-radius:12px;padding:15px 18px;font-size:14px;color:var(--ink-mid);cursor:pointer;text-align:left;display:flex;align-items:flex-start;gap:12px;line-height:1.65;transition:border-color .15s,background .15s;font-family:'Noto Sans KR',sans-serif;width:100%}
+.opt:hover{border-color:var(--sage-light)}
+.opt.sel{border-color:var(--sage);background:var(--sage-pale);color:var(--sage)}
+.odot{width:17px;height:17px;border-radius:50%;border:2px solid var(--paper-dark);flex-shrink:0;margin-top:2px;transition:all .15s;background:#fff}
+.opt.sel .odot{background:var(--sage);border-color:var(--sage)}
+
+.bool-r{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bbtn{background:#fff;border:1.5px solid var(--paper-dark);border-radius:12px;padding:22px 14px;font-size:15px;cursor:pointer;text-align:center;color:var(--ink-mid);transition:all .18s;font-family:'Noto Sans KR',sans-serif}
+.bbtn.yes{border-color:var(--sage);background:var(--sage-pale);color:var(--sage);font-weight:600}
+.bbtn.no{border-color:var(--paper-dark);background:var(--paper);color:var(--ink-light)}
+
+/* 네비 */
+.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding-top:22px;border-top:1px solid var(--paper-mid)}
+.btn-back{background:none;border:1.5px solid var(--paper-dark);border-radius:9px;padding:11px 20px;font-size:13px;color:var(--ink-light);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s}
+.btn-back:hover{border-color:var(--ink-light);color:var(--ink)}
+.btn-back:disabled{opacity:.3;cursor:not-allowed}
+.btn-next{background:var(--ink);border:none;border-radius:9px;padding:13px 28px;font-size:13px;color:#fff;cursor:pointer;font-weight:500;transition:background .2s;font-family:'Noto Sans KR',sans-serif}
+.btn-next:hover{background:var(--sage)}
+.btn-next:disabled{background:var(--paper-dark);cursor:not-allowed}
+
+/* 단계 표시 */
+.phase-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:500;letter-spacing:1px;margin-bottom:16px}
+.phase-1{background:var(--sage-pale);color:var(--sage)}
+.phase-2{background:var(--cobalt-pale);color:var(--cobalt)}
+.phase-3{background:var(--rust-pale);color:var(--rust)}
+
+/* ── 타이브레이크 ── */
+.tie-wrap{padding:40px 40px 32px}
+.tie-eye{font-size:10px;letter-spacing:2.5px;color:var(--rust);font-weight:500;margin-bottom:8px}
+.tie-t{font-family:'Noto Serif KR',serif;font-size:22px;color:var(--ink);margin-bottom:8px}
+.tie-s{font-size:13px;color:var(--ink-light);line-height:1.7;margin-bottom:24px}
+.tie-q{font-family:'Noto Serif KR',serif;font-size:18px;color:var(--ink);line-height:1.7;margin-bottom:22px;padding:16px 20px;background:var(--paper);border-radius:12px;border-left:3px solid var(--rust)}
+
+/* ── 결과 ── */
+.res-hero{padding:0;overflow:hidden}
+.res-banner{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.res-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(0,0,0,.08))}
+.res-main-lbl{font-size:11px;letter-spacing:2.5px;color:rgba(255,255,255,.75);margin-bottom:6px;font-weight:500;z-index:1}
+.res-type-name{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;color:#fff;z-index:1;text-align:center;line-height:1.35;text-shadow:0 2px 12px rgba(0,0,0,.18)}
+.res-hanja{font-size:13px;color:rgba(255,255,255,.7);z-index:1;margin-top:6px;letter-spacing:1px}
+
+.res-body{padding:32px 36px}
+.conf-row{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.conf-bar-w{flex:1;height:6px;background:var(--paper-mid);border-radius:3px;overflow:hidden}
+.conf-bar-f{height:100%;border-radius:3px;transition:width 1s ease .3s}
+.conf-lbl{font-size:11px;color:var(--ink-light);white-space:nowrap}
+.conf-pct{font-size:13px;font-weight:600;width:36px;text-align:right}
+
+.res-desc{font-size:13px;color:var(--ink-mid);line-height:1.9;padding:18px 20px;background:var(--paper);border-radius:12px;margin-bottom:24px}
+
+.res-sec-l{font-size:10px;letter-spacing:2px;color:var(--ink-faint);padding-bottom:8px;border-bottom:1px solid var(--paper-dark);margin-bottom:14px}
+
+.score-bars{margin-bottom:8px}
+.sc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sc-nm{font-size:11px;color:var(--ink-mid);width:110px;text-align:right;flex-shrink:0;line-height:1.3}
+.sc-tr{flex:1;height:7px;background:var(--paper-mid);border-radius:4px;overflow:hidden}
 .sc-fi{height:100%;border-radius:4px;transition:width 1s ease .3s}
-.sc-vl{font-size:11px;font-weight:500;width:28px}
+.sc-vl{font-size:11px;font-weight:500;width:30px}
 
-.cards-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.info-card{background:var(--cream);border:1px solid var(--beige-dark);border-radius:16px;padding:22px 24px}
-.card-title{font-size:10px;letter-spacing:2px;color:var(--text-light);padding-bottom:7px;border-bottom:1px solid var(--beige-dark);margin-bottom:14px}
-.h-item{display:flex;gap:8px;font-size:13px;color:var(--text-mid);padding:7px 0;border-bottom:1px solid var(--beige-mid);line-height:1.6}
-.h-item:last-child{border-bottom:none}
-.h-dot{color:var(--sage-dark);font-weight:700;flex-shrink:0}
-.w-item{display:flex;gap:8px;font-size:13px;color:#7A3A2A;padding:7px 0;border-bottom:1px solid #F0DDD8;line-height:1.6}
-.w-item:last-child{border-bottom:none}
-.w-dot{color:#C0603A;font-weight:700;flex-shrink:0}
-.food-section{background:var(--cream);border:1px solid var(--beige-dark);border-radius:16px;padding:22px 28px;margin-bottom:14px}
-.food-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.food-card{border-radius:12px;padding:16px}
-.food-card.good {background:#EDF4EF;border:1px solid #B0D4B6}
-.food-card.bad {background:#FBF2EF;border:1px solid #E0B8AD}
-.fc-t{font-size:10px;font-weight:600;letter-spacing:.5px;margin-bottom:10px}
-.food-card.good .fc-t{color:#4E7053}
-.food-card.bad .fc-t{color:#8B4A3A}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.info-box{background:#fff;border:1px solid var(--paper-dark);border-radius:14px;padding:20px 22px}
+.ib-t{font-size:10px;letter-spacing:1.5px;color:var(--ink-faint);padding-bottom:8px;border-bottom:1px solid var(--paper-mid);margin-bottom:12px}
+.ib-item{font-size:13px;color:var(--ink-mid);padding:6px 0;border-bottom:1px solid var(--paper-mid);line-height:1.6;display:flex;gap:8px}
+.ib-item:last-child{border-bottom:none}
+.ib-dot{flex-shrink:0;font-weight:700}
+
+.food-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.food-box{border-radius:10px;padding:14px}
+.food-box.good{background:var(--sage-pale);border:1px solid #B0D4B6}
+.food-box.bad{background:var(--rust-pale);border:1px solid #D4A898}
+.fb-t{font-size:10px;font-weight:600;letter-spacing:.5px;margin-bottom:9px}
+.food-box.good .fb-t{color:var(--sage)}
+.food-box.bad .fb-t{color:var(--rust)}
 .ftags{display:flex;flex-wrap:wrap;gap:5px}
-.ftag{font-size:12px;padding:3px 9px;border-radius:20px}
-.food-card.good .ftag{background:rgba(78,112,83,.13);color:#3A6040}
-.food-card.bad .ftag{background:rgba(139,74,58,.10);color:#7A3A2A}
-.sp-section{background:var(--cream);border:1px solid var(--beige-dark);border-radius:16px;padding:22px 28px;margin-bottom:14px}
-.sp-item{font-size:13px;color:var(--text-mid);padding:8px 0;border-bottom:1px solid var(--beige-mid);line-height:1.65;display:flex;gap:8px}
+.ftag{font-size:11px;padding:3px 8px;border-radius:12px}
+.food-box.good .ftag{background:rgba(92,124,94,.15);color:var(--sage)}
+.food-box.bad .ftag{background:rgba(158,90,58,.12);color:var(--rust)}
+
+.sp-box{background:#fff;border:1px solid var(--paper-dark);border-radius:14px;padding:20px 22px;margin-bottom:20px}
+.sp-item{font-size:13px;color:var(--ink-mid);padding:7px 0;border-bottom:1px solid var(--paper-mid);line-height:1.65;display:flex;gap:8px}
 .sp-item:last-child{border-bottom:none}
-.sp-dot{color:var(--sage-dark);font-weight:700;flex-shrink:0}
-.disc{font-size:11px;color:var(--text-light);text-align:center;padding:20px 16px;border-top:1px solid var(--beige-dark);line-height:1.8;margin-top:4px;background:var(--cream);border-radius:0 0 16px 16px}
-.btn-r{width:100%;background:none;border:1.5px solid var(--sage-dark);border-radius:11px;padding:14px;font-size:14px;color:var(--sage-dark);cursor:pointer;font-weight:500;margin-top:14px;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
-.btn-r:hover{background:var(--sage-dark);color:#fff}
+.sp-dot{color:var(--sage);font-weight:700;flex-shrink:0}
+
+.btn-restart{width:100%;background:none;border:1.5px solid var(--ink-mid);border-radius:11px;padding:14px;font-size:14px;color:var(--ink-mid);cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.btn-restart:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.res-disc{font-size:11px;color:var(--ink-faint);text-align:center;line-height:1.8;margin-top:10px}
+
+@media(max-width:560px){
+  .start-hero,.start-body,.q-wrap,.res-body,.tie-wrap{padding-left:22px;padding-right:22px}
+  .two-col,.info-grid{grid-template-columns:1fr}
+  .bool-r{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
-<div id="app">
-  <div class="hdr">
-    <div class="hdr-t">나를 위한 건강지도 : 자가 진단법</div>
-    <div class="hdr-s">김주식 사상의학 임상 원전 기반 · 9대 계열 분류</div>
+<div id="hdr">
+  <div class="hdr-inner">
+    <div class="logo">나를 위한 건강지도<span>김주式 사상의학 임상 원전 기반</span></div>
   </div>
   <div class="pbar-w"><div class="pbar-f" id="pbar" style="width:0%"></div></div>
-  <div class="wrap"><div class="inner" id="area"></div></div>
 </div>
 
+<div class="page"><div class="inner" id="area"></div></div>
+
 <script>
-/* ═══════════════════════════════════════════
-   데이터: 9대 계열 체질 정보
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   9대 계열 데이터
+   소음인: 신수열·신계 / 신수열·위계 / 위수한계  ← 수정
+══════════════════════════════════════════════════════ */
 const SUBS = {
-  '태음인위완계': {
-    main:'태음인', label:'태음인 1형', fullLabel:'태음인 1형 - 위완수한표한병 체질',
-    hanja:'胃脘受寒表寒病', animal:'bear-snow',
-    desc:'위완(명치)이 냉사를 받아 폐기가 허해지는 계열입니다. 안색이 청백하고 수족이 차며, 땀이 전신에 잘 소통되어야 건강합니다. 커피를 마셔도 잠을 잘 자고, 따뜻한 물(희온수)을 선호합니다. 대변은 세 체질 중 가장 가늘며 연변·활변 경향입니다.',
-    healthy:['전신에 땀이 적당히 소통될 것','대변이 부드럽게(활변) 잘 나올 것','수족이 따뜻하게 유지될 것'],
-    warning:['무한(땀이 전혀 안 남) 지속 시 위험','극심한 오한·사지 냉증 주의','가슴 두근거림(정충) = 중증 신호'],
-    good:['쇠고기','율무','콩','고구마','연근','무','도라지','호두','잣','밤','더덕','녹용','마'],
-    bad:['닭고기','돼지고기','찹쌀','인삼','생강','고추'],
-    special:['규칙적 유산소 운동으로 발한 유도','몸을 차게 하는 환경 금지','커피 소량 허용']
+
+  /* ── 태음인 ── */
+  '태음인위완계':{
+    main:'태음인', label:'태음인 위완계', fullLabel:'태음인 위완계 — 胃脘受寒表寒病',
+    hanja:'胃脘受寒表寒病', color:'#5C7C5E', bg:'linear-gradient(135deg,#5C7C5E,#8EAD8E)',
+    desc:'위완(명치)이 냉사를 받아 폐기가 허해지는 계열입니다. 안색이 청백하고 수족이 건조하며 차갑습니다. 완실무병의 조건은 전신에 땀이 잘 소통되는 것이며, 발병 시 땀이 전혀 나지 않게 됩니다. 커피를 마셔도 잠을 잘 자는 경향이 있고 따뜻한 물을 선호합니다.',
+    healthy:['전신에 땀이 적당히 소통될 것','대변이 부드럽고 규칙적일 것','수족이 따뜻하게 유지될 것'],
+    warning:['무한(땀 전혀 없음) 지속 시 위험','극심한 오한·사지 냉증 주의','가슴 두근거림(정충) = 중증 신호'],
+    good:['쇠고기','율무','콩','고구마','연근','도라지','호두','잣','밤','마','더덕'],
+    bad:['닭고기','돼지고기','인삼','홍삼','생강','고추'],
+    special:['규칙적 유산소 운동으로 발한 유도','몸을 차게 하는 환경 금지','커피 소량 허용 — 숙면에 도움']
   },
-  '태음인간계': {
-    main:'태음인', label:'태음인 2형', fullLabel:'태음인 2형 - 간수열이열병 체질',
-    hanja:'肝受熱裏熱病', animal:'bear-fire',
-    desc:'간열이 상승하여 폐를 조(燥)하게 하는 계열입니다. 안색이 황·적·흑색을 띠고 뺨에 홍조나 피지가 많습니다. 커피 2잔 이상이면 불면이 오고 찬물을 즐겨 찾습니다. 대변이 단단한 조변·변비 경향이며 변비 시 구고·항강이 동반됩니다.',
-    healthy:['대변이 규칙적이고 단단하지 않을 것','구고(입 쓴맛)·항강이 없을 것','뺨의 열감이 과하지 않을 것'],
-    warning:['심한 변비+구고+항강 지속 = 중증','안면홍조+두통+불면 동시 발생 주의','정충(가슴 두근거림) = 위험 신호'],
-    good:['쇠고기','콩','두부','율무','연근','도라지','밀','녹두','오이','칡'],
+  '태음인간계':{
+    main:'태음인', label:'태음인 간계', fullLabel:'태음인 간계 — 肝受熱裏熱病',
+    hanja:'肝受熱裏熱病', color:'#6A8040', bg:'linear-gradient(135deg,#6A8040,#9AAA60)',
+    desc:'간열(肝熱)이 상승하여 폐를 조(燥)하게 하는 계열입니다. 안색이 황·적·흑색을 띠거나 뺨에 홍조·피지가 많습니다. 커피 2잔 이상이면 불면이 오고, 변비 시 입이 쓰고(구고) 뒷목이 뻣뻣해집니다(항강). 찬물을 즐겨 찾는 것이 특징입니다.',
+    healthy:['대변이 규칙적이고 단단하지 않을 것','구고·항강이 없을 것','뺨 열감이 과하지 않을 것'],
+    warning:['변비+구고+항강 지속 = 중증','안면홍조+두통+불면 동시 발생 주의','정충(가슴 두근거림) = 위험 신호'],
+    good:['쇠고기','콩','두부','율무','연근','도라지','녹두','오이','칡','갈근'],
     bad:['닭고기','돼지고기','인삼','홍삼','꿀','생강','고추'],
-    special:['분노·스트레스 감정 조절 최우선','충분한 수면','변비 즉각 식이 조절']
+    special:['분노·스트레스 감정 조절 최우선','충분한 수면 확보','변비 발생 즉시 식이 조절']
   },
-  '소양인비계': {
-    main:'소양인', label:'소양인 1형', fullLabel:'소양인 1형 - 비수한표한병 체질',
-    hanja:'脾受寒表寒病', animal:'collie-shoes',
-    desc:'비장이 한사를 받아 신음이 부족해지는 계열입니다. 수족이 냉하고 한출이 없으며 냄새 없는 방귀가 잦습니다. 찬물을 마시면 설사를 하기 쉽고물을 잘 안 마십니다(불음수). 발뒤꿈치 종렬(踵裂)이 잘 발생합니다.',
+
+  /* ── 소양인 ── */
+  '소양인비계':{
+    main:'소양인', label:'소양인 비계', fullLabel:'소양인 비계 — 脾受寒表寒病',
+    hanja:'脾受寒表寒病', color:'#9E5A3A', bg:'linear-gradient(135deg,#9E5A3A,#C4845C)',
+    desc:'비장이 한사를 받아 신음이 부족해지는 계열입니다. 수족이 냉하고 한출이 없으며, 냄새 없는 방귀가 잦습니다. 찬물을 마시면 설사를 하기 쉽고 물을 잘 마시지 않습니다. 발뒤꿈치 종렬(踵裂)이 잘 발생하고 냉두통이 특징입니다.',
     healthy:['대변이 막힘없이 소통될 것','수족이 따뜻하게 유지될 것','방귀가 잦지 않을 것'],
     warning:['수족 냉증 심화 = 비냉 악화 신호','냉두통 발생 시 즉시 보온','발뒤꿈치 종렬 심화 주의'],
-    good:['돼지고기','보리','팥','수박','오이','상추','우유','굴','해산물','파인애플'],
+    good:['돼지고기','보리','팥','수박','오이','상추','굴','해산물','파인애플','참외'],
     bad:['닭고기','인삼','홍삼','꿀','생강','고추','찹쌀'],
     special:['찬 음식·음료 주의','발뒤꿈치 보습 및 보온 관리','냉두통 발생 시 즉시 보온']
   },
-  '소양인위계': {
-    main:'소양인', label:'소양인 2형', fullLabel:'소양인 2형 - 위수열이열병 체질',
-    hanja:'胃受熱裏熱病', animal:'collie-wave',
-    desc:'위장에 열이 쌓여 신음이 소모되는 계열입니다. 수족이 따뜻하고 손발에 땀이 잘 납니다(수족장심다한). 찬물을 많이 즐기고 자다 깨서 얼음물을 찾을 정도의 극심한 갈증을 느낍니다. 악취 나는 방귀가 특징입니다.',
+  '소양인위계':{
+    main:'소양인', label:'소양인 위계', fullLabel:'소양인 위계 — 胃受熱裏熱病',
+    hanja:'胃受熱裏熱病', color:'#A0602A', bg:'linear-gradient(135deg,#A0602A,#C89050)',
+    desc:'위장에 열이 쌓여 신음이 소모되는 계열입니다. 수족이 따뜻하고 손발에 땀이 잘 납니다. 찬물을 많이 즐기고 자다 깨서 얼음물을 찾을 정도의 갈증을 느낍니다. 방귀가 소발하며 악취가 심하고, 변비 시 구조·구취가 동반됩니다.',
     healthy:['대변이 막힘없이 소통될 것','갈증이 심하지 않을 것','수면이 안정적일 것'],
-    warning:['극심한 갈증·불면·두근거림 지속 주의','대변 장기 막힘 = 위열 항진 위험','건망증+두려움(구심) 동반 시 험증'],
+    warning:['극심한 갈증·불면·두근거림 지속 주의','대변 장기 막힘 = 위열 항진 위험','건망증+두려움 동반 시 험증'],
     good:['돼지고기','수박','참외','보리','팥','오이','상추','해산물','녹두','배'],
     bad:['닭고기','인삼','홍삼','꿀','생강','고추','매운 음식'],
     special:['서늘한 환경 유지','분노 즉시 해소','수면 전 과식 금지']
   },
-  '소음인신계': {
-    main:'소음인', label:'소음인 1형', fullLabel:'소음인 1형 - 신수열표열병 체질',
-    hanja:'腎受熱表熱病', animal:'cat-thunder',
-    desc:'신양곤열(腎陽困熱)이 특징인 계열입니다. 평소 수족이 냉하고 땀이 거의 없으나 발병 시 전신에 땀이 납니다. 대변은 세 체질 중 제일 길고 처음이 다소 단단하지만 뒤로 갈수록 매끄럽게 풀려 나오는 양상이 특징입니다.',
-    healthy:['소화가 잘 되고 음식이 맞을 것','대변이 규칙적일 것','기운이 차고 손발이 따뜻할 것'],
-    warning:['발열 시 전신 다한 지속 = 즉시 진찰','사지 냉증 심화+두통 동반 주의','설사 후 극도 기력 저하 주의'],
+
+  /* ── 소음인 3분류 ── */
+  '소음인신계':{
+    main:'소음인', label:'소음인 신계', fullLabel:'소음인 신계 — 腎受熱 / 腎陽困熱',
+    hanja:'腎受熱 · 腎陽困熱', color:'#3A5A8A', bg:'linear-gradient(135deg,#3A5A8A,#6A8AB8)',
+    desc:'위냉(胃冷)에 막혀 위로 오르지 못한 신장의 양기가 열사를 받아 갇혀 뜨거워지는(곤열) 것이 주된 병리입니다. 평소 물은 찬물을 마시나 발병 시 오히려 물을 적게 마십니다. 방귀가 가끔 나오지만 악취가 지독하고, 설사 시 기력이 극심하게 빠집니다. 승보(升補) 위주의 치료가 원칙입니다.',
+    healthy:['소화가 잘 되고 음식이 잘 맞을 것','대변이 규칙적일 것','기운이 충분히 유지될 것'],
+    warning:['설사 후 극도 탈력+불음수 지속 주의','발열 시 전신 다한 지속 = 즉시 진찰','사지 냉증 심화+두통 동반 주의'],
     good:['닭고기','찹쌀','감자','파','생강','마늘','인삼','황기','꿀','대추','사과'],
-    bad:['돼지고기','팥','수박','보리','맥주','찬 음식'],
-    special:['발병 초기 발한 후 즉시 보온','냉풍·에어컨 직접 노출 금지','인삼·홍삼 복용 시 기운 남']
+    bad:['돼지고기','팥','수박','보리','맥주','찬 음식','냉면'],
+    special:['발병 초기 발한 후 즉시 보온','냉풍·에어컨 직접 노출 금지','인삼·황기 기운 보충에 적합']
   },
-  '소음인위계': {
-    main:'소음인', label:'소음인 2형', fullLabel:'소음인 2형 - 위수한리한병 체질',
-    hanja:'胃受寒裏寒病', animal:'cat-scarf',
-    desc:'위장이 냉사를 받아 비장계 기능이 저하되는 계열입니다. 물을 거의 마시지 않으며(불음수), 배가 차고 대변이 매우 묽습니다. 수족이 온하고 평소 땀이 약간 납니다. 발바닥 용천혈~연곡혈 부위에 생강편처럼 허물이 벗겨지는 특이 지표가 있습니다.',
+  '소음인위계':{
+    main:'소음인', label:'소음인 위계', fullLabel:'소음인 위계 — 腎受熱 / 大腸怕寒',
+    hanja:'腎受熱 · 大腸怕寒', color:'#4A6A9A', bg:'linear-gradient(135deg,#4A6A9A,#7A9ACA)',
+    desc:'위냉이 대장까지 영향을 끼쳐 대장이 한기를 이기지 못하는 것이 주된 병리입니다. 평소부터 물을 적게 마시고, 발병 시 위가 극도로 냉해지면 찬물을 전혀 마시지 못합니다. 방귀는 자주 나오지만 냄새가 거의 없고, 음식·스트레스에 의해 쉽게 활변으로 변합니다. 화해(和解) 위주의 치료가 원칙입니다.',
     healthy:['소화가 잘 되고 배가 따뜻할 것','대변이 규칙적일 것','정서적으로 안정될 것'],
-    warning:['물 보기만 해도 거부감 = 위극냉 위험','불안정지심 극심 = 비기(脾氣) 꺾인 중증','발바닥 허물 심화 주의'],
-    good:['닭고기','찹쌀','감자','파','생강','마늘','인삼','꿀','대추'],
-    bad:['돼지고기','밀가루','보리','팥','수박','참외','맥주','냉면'],
-    special:['따뜻한 음식·음료 위주','복부 보온 최우선','발바닥 허물 주기적 확인']
+    warning:['찬물 보기만 해도 거부감 = 위극냉 위험','불안정지심 극심 = 비기 꺾인 중증','발바닥 허물 심화 주의'],
+    good:['닭고기','찹쌀','감자','파','생강','마늘','인삼','꿀','대추','황기'],
+    bad:['돼지고기','밀가루','보리','팥','수박','참외','맥주','냉면','찬 음식'],
+    special:['따뜻한 음식·음료 위주 식사','복부 보온 최우선','발바닥 허물 주기적 확인']
   },
-  '소음인중풍': {
-    main:'소음인', label:'소음인 3형', fullLabel:'소음인 3형 - 위수냉결·중풍 위험 유형',
-    hanja:'胃受冷結 / 不安定之心', animal:'cat-ice',
-    desc:'위냉이 극도에 달하고 비기(脾氣)가 꺾여 극심한 불안감과 정서 불안정이 나타나는 중증 계열입니다. 고열에도 물을 극도로 거부하거나 물을 보기만 해도 흐느끼는 증상이 나타날 수 있습니다.',
-    healthy:['정서적으로 안정될 것','소화가 원활하고 위기(胃氣)가 살아있을 것','체온이 유지될 것'],
-    warning:['극심 불안·공황 = 비기 절박 신호','고열+완전한 음수 거부 = 즉각 응급 진료','사지 마비감 동반 시 즉시 내원'],
+  '소음인위수한계':{
+    main:'소음인', label:'소음인 위수한계', fullLabel:'소음인 위수한계 — 胃受寒裏寒病',
+    hanja:'胃受寒裏寒病', color:'#5A4A7A', bg:'linear-gradient(135deg,#5A4A7A,#8A7AAA)',
+    desc:'위장이 냉사를 직접 받아 비장계 기능이 저하되는 계열입니다. 물을 거의 마시지 않으며(불음수), 배가 차고 대변이 매우 묽습니다. 수족이 온하고 평소 땀이 약간 납니다. 극도로 심해지면 고열에도 물을 거부하거나 물을 보기만 해도 흐느끼는 극증이 나타납니다.',
+    healthy:['소화가 잘 되고 배가 따뜻할 것','정서적으로 안정될 것','대변이 규칙적일 것'],
+    warning:['물 보기만 해도 흐느낌 = 즉각 응급','불안정지심 극심 = 비기(脾氣) 절박 신호','고열+완전한 음수 거부 = 즉시 내원'],
     good:['인삼','황기','계피','생강','대추','닭고기','찹쌀','마늘'],
-    bad:['찬 음식 전체','수박','팥빙수','냉커피','돼지고기'],
+    bad:['찬 음식 전체','수박','팥빙수','냉커피','돼지고기','차가운 물'],
     special:['정서적 안정 최우선','한의사 정기 진료 필수','몸과 마음 모두 따뜻하게 유지']
   },
-  '태양인외감': {
-    main:'태양인', label:'태양인 1형', fullLabel:'태양인 1형 - 외감요척병 체질',
-    hanja:'外感腰脊病 / 解亦病', animal:'eagle-mountain',
-    desc:'폐기 상충으로 하체 무력이 나타나는 계열입니다. 소변 양이 많고 시원하게 잘 나오는 것이 건강 기준이며, 대변은 굵직하고 미끄럽게 많은 양이 나옵니다.',
+
+  /* ── 태양인 ── */
+  '태양인외감':{
+    main:'태양인', label:'태양인 외감', fullLabel:'태양인 외감 — 外感腰脊病',
+    hanja:'外感腰脊病 · 解亦病', color:'#6A7040', bg:'linear-gradient(135deg,#6A7040,#9A9A60)',
+    desc:'폐기 상충으로 하체 무력이 나타나는 계열입니다. 소변 양이 많고 시원하게 잘 나오는 것이 완실무병의 기준이며, 육류 소화가 어렵고 해산물이 잘 맞습니다. 하체가 약해 보행 시 좌우로 흔들리는 경향이 있습니다.',
     healthy:['소변이 충분히 시원하게 나올 것','하체에 힘이 있을 것','균형 감각이 유지될 것'],
     warning:['소변 감소+하체 무력감 = 즉시 진료','보행 장애·다리 무력 진행 주의','진노(震怒) 후 기 상충 주의'],
     good:['메밀','새우','게','조개류','포도','감','앵두','솔잎','순채','모과'],
-    bad:['소고기','돼지고기','닭고기','설탕','유지류','매운 음식'],
+    bad:['소고기','돼지고기','닭고기','설탕','기름진 음식','매운 음식'],
     special:['하체 강화 운동 꾸준히','소변 배출 상태 일상 점검','진노 억제 필수']
   },
-  '태양인내촉': {
-    main:'태양인', label:'태양인 2형', fullLabel:'태양인 2형 - 내촉소장병 체질',
-    hanja:'內觸小腸病 / 噎膈病', animal:'eagle-leaf',
+  '태양인내촉':{
+    main:'태양인', label:'태양인 내촉', fullLabel:'태양인 내촉 — 內觸小腸病',
+    hanja:'內觸小腸病 · 噎膈病', color:'#7A6A30', bg:'linear-gradient(135deg,#7A6A30,#AAA050)',
     desc:'온성 작용이 태성하여 위완 혈액이 마르고 흡취 기능이 약해지는 계열입니다. 입안이 자주 마르고 대변이 단단해집니다. 분노 시 식도가 좁아지고 음식을 삼키기 어렵거나 토하는 열격·반위 증상이 특징입니다.',
     healthy:['식사가 원활하고 입이 마르지 않을 것','감정 기복이 적을 것','대변이 규칙적일 것'],
     warning:['삼킴 곤란·구역·구토 반복 = 즉시 진료','분노 후 열격 진행 주의','입 마름+대변 단단함 악화 주의'],
@@ -253,429 +299,464 @@ const SUBS = {
   }
 };
 
-const ALL_SUBS = ['태음인위완계','태음인간계','소양인비계','소양인위계','소음인신계','소음인위계','소음인중풍','태양인외감','태양인내촉'];
-const MAIN_COL = {'태음인':'#7A9E7E','소양인':'#9E7A6B','소음인':'#6B7A9E','태양인':'#9E956B'};
+const ALL_SUBS = [
+  '태음인위완계','태음인간계',
+  '소양인비계','소양인위계',
+  '소음인신계','소음인위계','소음인위수한계',
+  '태양인외감','태양인내촉'
+];
+
 const MAIN_MAP = {
   '태음인':['태음인위완계','태음인간계'],
   '소양인':['소양인비계','소양인위계'],
-  '소음인':['소음인신계','소음인위계','소음인중풍'],
+  '소음인':['소음인신계','소음인위계','소음인위수한계'],
   '태양인':['태양인외감','태양인내촉']
 };
 const MAINS = ['태음인','소양인','소음인','태양인'];
 
-/* ═══════════════════════════════
-   가중치 캡 함수 (max 기본 2)
-═══════════════════════════════ */
-function cap(sc, max=2) {
-  const r={};
-  Object.entries(sc).forEach(([k,v])=>{ r[k]=Math.min(v,max); });
-  return r;
-}
+/* ══════════════════════════════════════════════════════
+   2단계 진단 로직
+   [1단계] 주체질 확정 → [2단계] 계열 확정
+══════════════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════════════════════
-   [규칙 1] 배제 로직 패널티 감점제 전환
-═══════════════════════════════════════════════════════════ */
-const FILTER_PENALTY = -15;
+/* ─ 1단계 질문: 주체질 결정 ─ */
+const QS_PHASE1 = [
 
-/* ═══════════════════════════════
-   문항 정의
-═══════════════════════════════ */
-const QS = [
-  /* ─── PART 2: 수족·한출 ─── */
-  {id:'h1', type:'choice', cat:'수족·한출', col:'#4E7053', num:1,
-   text:'평소(여름 제외) 손발의 온도는 어떤가요?',
-   hint:'봄·가을·겨울 기준, 잠잘 때 발을 이불 밖으로 빼는 경향 포함',
+  {id:'p1_stool_width', type:'choice', phase:1, weight:4,
+   text:'평소 대변의 굵기는 어느 쪽에 가장 가깝습니까?',
+   hint:'아래 그림을 참고해 가장 비슷한 굵기를 골라주세요',
+   viz:'stool_width',
    opts:[
-     {t:'항상 차고 냉한 편이다 (사시냉)', sc:cap({소양인비계:2,소음인신계:2})},
-     {t:'항상 따뜻하거나 열감이 있는 편이다 (사시온)', sc:cap({소양인위계:2,소음인위계:1,태음인간계:1})},
-     {t:'겨울에 특히 얼음장처럼 차다', sc:cap({태음인위완계:2,소음인신계:1})},
-     {t:'겨울에도 따뜻하거나 뜨겁다 (잠잘 때 발이 뜨거움)', sc:cap({태음인간계:2,소음인위계:2,소양인위계:2})},
-     {t:'보통이다', sc:{}}
+     {t:'굵음 — 500원짜리 동전 정도이거나 더 굵고, 짧게 뚝뚝 끊겨 나온다', main:{소양인:4}},
+     {t:'중간 — 100원짜리 동전 정도 굵기로 이어진다', main:{소음인:4}},
+     {t:'가늠 — 50원짜리 동전에서 100원짜리 동전 사이 굵기이며 형태가 다양하다', main:{태음인:4}},
+     {t:'잘 모르겠다', main:{}}
    ]},
 
-  /* ─── 필터 f1: 사우나·발한 쾌감 ─── */
-  {id:'f1', type:'bool', cat:'체질 필터', col:'#8B6F5E', num:2,
-   text:'사우나·찜질방이나 격렬한 운동으로 땀을 흠뻑 빼고 나면, 어지럽기보다 오히려 몸이 가볍고 상쾌하다',
-   yes:{penalty:'소음인'}, no:{}},
-
-  /* ─── h2: 땀 양상 ─── */
-  {id:'h2', type:'choice', cat:'수족·한출', col:'#4E7053', num:3,
-   text:'평소 건강할 때, 땀은 어떻게 나나요?',
+  {id:'p1_stool_shape', type:'choice', phase:1, weight:3,
+   text:'대변이 나올 때 처음과 끝의 굳기 양상은 어떠한가요?',
+   hint:'아래 그림을 참고해 평소와 가장 비슷한 형태를 골라주세요',
+   viz:'stool_shape',
    opts:[
-     {t:'전신에 땀이 시원하게 골고루 많이 난다 (전신다한)', sc:{태음인위완계:3,태음인간계:3}},
-     {t:'손발바닥·가슴 위주로 땀이 잘 난다 (수족장심다한)', sc:cap({소양인위계:2})},
-     {t:'거의 안 나거나 늘 뽀송뽀송하다 (무한)', sc:cap({소음인신계:2,소양인비계:2})},
-     {t:'밤에 잘 때 베개가 젖을 정도로 식은땀을 흘린다 (도한)', sc:cap({소음인신계:1,소양인위계:1,태음인간계:1})},
-     {t:'약간 나거나 보통이다 (소한·미한)', sc:cap({소음인위계:1,태음인간계:1})}
+     {t:'처음에는 단단하고 끝 부분은 매끄럽게 풀려 나온다', main:{소양인:3}},
+     {t:'처음부터 끝까지 일정하고 길게 이어진다', main:{소음인:3}},
+     {t:'처음은 약간 단단하고 뒤로 갈수록 살짝 풀어지는 정도다', main:{태음인:3}},
+     {t:'처음부터 묽거나 설사 경향이다', main:{태음인:2, 소음인:1}},
+     {t:'잘 모르겠다', main:{}}
    ]},
 
-  {id:'h3', type:'bool', cat:'수족·한출', col:'#4E7053', num:4,
-   text:'땀을 흠뻑 흘리고 나면 몸이 가볍고 개운하며 상쾌하다',
-   yes:{sc:cap({태음인위완계:2,태음인간계:2})}, no:{sc:cap({소음인신계:1,소음인위계:1})}},
-
-  /* ─── 필터 f4: 상체 발달, 하체 빈약 ─── */
-  {id:'f4', type:'bool', cat:'체질 필터', col:'#8B6F5E', num:5,
-   text:'가슴 부위는 넓고 튼튼한 반면, 골반이나 하체가 눈에 띄게 빈약하여 걸음걸이가 가볍거나 붕 뜬 느낌이다',
-   yes:{penalty:'태음인'}, no:{}},
-
-  {id:'h4', type:'bool', cat:'수족·한출', col:'#4E7053', num:6,
-   text:'발뒤꿈치가 가뭄에 논바닥 갈라지듯 두꺼워지거나, 피가 날 정도로 심하게 갈라진 적이 있다 (종렬)',
-   hint:'소양인 비계의 핵심 외부 지표',
-   yes:{sc:cap({소양인비계:2,태음인위완계:1,소음인위계:1})}, no:{sc:{}}},
-
-  {id:'h5', type:'bool', cat:'수족·한출', col:'#4E7053', num:7,
-   text:'발바닥(용천혈~연곡혈)이 생강편처럼 허물이 벗겨지거나 밀가루떡처럼 갈라진다',
-   hint:'소음인 위계의 핵심 외부 지표',
-   yes:{sc:{소음인위계:4}}, no:{sc:{}}},
-
-  /* ─── PART 4: 대변 굵기 ─── */
-  {id:'d1', type:'choice', cat:'대변 형태', col:'#6B4E3D', num:8, viz:'stool-width',
-   text:'평소 대변의 굵기는 어느 쪽에 가깝나요?',
-   hint:'원전 2강 19항 기준',
+  {id:'p1_face', type:'choice', phase:1, weight:3,
+   text:'얼굴 모양과 턱선은 어느 쪽과 가장 비슷한가요?',
+   hint:'지금 체중이나 나이보다 타고난 얼굴 뼈대를 기준으로 골라주세요',
    opts:[
-     {t:'굵다 — 가래떡이나 바나나보다 굵은 편이다', sc:cap({소양인비계:2,소양인위계:2})},
-     {t:'중간 — 바나나 정도 굵기다', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'가늘다 — 바나나보다 가는 편이다', sc:cap({태음인위완계:2,태음인간계:2})},
-     {t:'잘 모르겠다', sc:{}}
+     {t:'턱선이 두툼하고 단단해 보이며 묵직한 느낌이다', main:{태음인:3}},
+     {t:'얼굴이 위아래로 길고 뺨이나 턱이 각진 느낌이다', main:{소양인:3}},
+     {t:'얼굴이 갸름하고 턱이 얇아 날씬해 보인다', main:{소음인:3}},
+     {t:'뒷목이 유독 굵고 기세 좋게 발달해 있다', main:{태양인:4}},
+     {t:'잘 모르겠다', main:{}}
    ]},
 
-  /* ─── PART 3: 음수 관계 ─── */
-  {id:'w1', type:'choice', cat:'음수 관계', col:'#7A5C8B', num:9,
-   text:'평소 즐겨 마시는 물의 온도는 어떤가요?',
-   hint:'태음인 위완계=희온수 / 태음인 간계=냉수 — 핵심 감별점',
+  {id:'p1_sweat_hand', type:'choice', phase:1, weight:3,
+   text:'평소 손발의 온도와 손발바닥에 땀이 나는지 어떠한가요?',
+   hint:'봄·가을·겨울 기준으로, 평소 가장 자주 느끼는 상태를 골라주세요',
    opts:[
-     {t:'찬물이나 얼음물을 즐겨 많이 마신다 (희냉수)', sc:cap({소양인위계:2,태음인간계:3})},
-     {t:'따뜻하거나 미지근한 물을 선호한다 (희온수)', sc:cap({태음인위완계:2,소음인위계:1})},
-     {t:'물 자체를 거의 마시지 않는다 (불음수)', sc:cap({소음인위계:2,소음인신계:1,소양인비계:1})},
-     {t:'한여름 삼복더위에도 찬물을 마시지 못하거나 거부감이 든다', sc:cap({소음인위계:2,소양인위계:2,소음인신계:1})},
-     {t:'보통이다 (온도에 민감하지 않음)', sc:{}}
+     {t:'계절에 상관없이 손발이 차가운 편이고 피부가 건조하다', main:{소양인:2, 소음인:2}},
+     {t:'손발이 따뜻하거나 뜨겁고 손발바닥에 땀이 자주 찬다', main:{소양인:2, 태음인:1}},
+     {t:'겨울에 특히 심하게 차고 건조해진다', main:{태음인:3, 소음인:1}},
+     {t:'겨울에도 따뜻하거나 뜨겁다 (잠잘 때 발을 이불 밖으로 뺀다)', main:{태음인:2, 소양인:2}},
+     {t:'보통이다', main:{}}
    ]},
 
-  /* ─── 대변 길이 ─── */
-  {id:'d2', type:'choice', cat:'대변 형태', col:'#6B4E3D', num:10, viz:'stool-length',
-   text:'평소 대변의 길이는 어떤 양상인가요?',
-   hint:'원전 2강 19항 기준',
+  {id:'p1_body_type', type:'choice', phase:1, weight:2,
+   text:'어깨와 엉덩이 중 어느 쪽이 더 크고 발달했나요?',
+   hint:'지금 체중보다 타고난 뼈대 비율을 기준으로 골라주세요',
    opts:[
-     {t:'길다 — 소시지처럼 길게 이어진다', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'중간 — 끊김이 적당하고 보통 수준이다', sc:cap({태음인위완계:2,태음인간계:2})},
-     {t:'짧다 — 굵고 짧게 뚝뚝 끊겨 나온다', sc:cap({소양인비계:2,소양인위계:2})},
-     {t:'물 같거나 아주 묽다', sc:cap({소음인위계:2,태음인위완계:1})},
-     {t:'잘 모르겠다', sc:{}}
+     {t:'어깨가 넓고 발달했으나 엉덩이·하체가 상대적으로 작다 (역사다리형)', main:{소양인:2}},
+     {t:'엉덩이가 크고 발달했으나 어깨가 상대적으로 처져 있다 (사다리형)', main:{소음인:2}},
+     {t:'상하 균형이 맞고 원기둥처럼 골격이 균일하다', main:{태음인:2}},
+     {t:'상체가 발달하고 하체가 약해 보인다 (특히 허리 아래)', main:{태양인:3}},
+     {t:'잘 모르겠다', main:{}}
    ]},
 
-  {id:'w2', type:'choice', cat:'음수 관계', col:'#7A5C8B', num:11,
-   text:'갈증이 심하게 느껴질 때, 어느 부위부터 가장 먼저 바짝 말라오나요?',
-   hint:'소양인=인후→설순부 / 소음인=설순→인후부 / 태음인=구개→인후·설순부',
+  {id:'p1_skin', type:'choice', phase:1, weight:3,
+   text:'평소 피부를 손으로 만지면 어떤 느낌인가요?',
+   hint:'로션이나 크림을 바르지 않은 자연 상태를 기준으로 골라주세요',
    opts:[
-     {t:'목구멍(인후부)이 먼저 마르고 점차 입술 쪽으로 말라 나온다', sc:cap({소양인위계:2,소양인비계:1})},
-     {t:'입술이나 혀 앞부분이 먼저 마르고 점차 목구멍 쪽으로 말라 들어간다', sc:cap({소음인신계:2,소음인위계:1})},
-     {t:'입천장(구개)이나 코안이 먼저 마르고 평소 코가 건조해 코딱지가 잘 생긴다', sc:cap({태음인간계:2,태음인위완계:1})},
-     {t:'평소 목이 타거나 갈증을 느끼는 증상이 거의 없다', sc:cap({소음인위계:2})}
+     {t:'까슬까슬하고 건조한 느낌이다. 각질이 자주 일어난다', main:{태음인:3}},
+     {t:'매끄럽고 촉촉한 느낌이다', main:{소음인:3}},
+     {t:'기름기가 많고 번들거리는 느낌이다', main:{태음인:2, 소양인:1}},
+     {t:'발뒤꿈치나 손발이 자주 갈라지거나 두꺼워진다', main:{소양인:3}},
+     {t:'잘 모르겠다', main:{}}
    ]},
 
-  /* ─── 필터 f3: 설사 후 기력 이상 무관 ─── */
-  {id:'f3', type:'bool', cat:'체질 필터', col:'#8B6F5E', num:12,
-   text:'물 같은 설사를 하루 10회 이상 쏟아도 기운이 심하게 빠지지 않는다',
-   yes:{penalty:'소음인'}, no:{}},
-
-  {id:'w3', type:'bool', cat:'음수 관계', col:'#7A5C8B', num:13,
-   text:'자다가 깨서 얼음물을 찾을 정도의 극심한 갈증을 느낀 적이 있다',
-   yes:{sc:cap({소양인위계:2})}, no:{sc:{}}},
-
-  /* ─── d3: 대변 굳기 ─── */
-  {id:'d3', type:'choice', cat:'대변 형태', col:'#6B4E3D', num:14,
-   text:'평소 대변이 나올 때, 처음과 끝의 굳기(단단함) 양상은 어떠한가요?',
+  {id:'p1_costal', type:'choice', phase:1, weight:3,
+   text:'명치 아래 갈비뼈를 양손으로 살짝 눌러보면 어떤 느낌인가요?',
+   hint:'숨을 편하게 내쉰 상태에서 명치 바로 아래 갈비뼈 모양을 확인해보세요',
+   viz:'costal_angle',
    opts:[
-     {t:'변을 볼 때, 첫 부분은 다소 단단하거나 굳어서 나오지만 뒤로 갈수록 매끄럽고 부드럽게 풀려 나온다',
-      sc:cap({소양인위계:2,소양인비계:2})},
-     {t:'처음부터 끝까지 끊기지 않고, 가래떡이나 매끄러운 바나나처럼 일정한 굳기와 두께를 유지하며 시원하게 나온다',
-      sc:cap({소음인신계:2,소음인위계:1})},
-     {t:'토끼똥이나 염소똥처럼 동글동글하게 굳어서 나오거나 변비 경향이 심하다',
-      sc:cap({태음인간계:2,소양인위계:2})},
-     {t:'처음부터 끝까지 형태가 풀어진 묽은 변이거나 평소 설사가 잦다',
-      sc:cap({태음인위완계:2,소음인위계:2})},
-     {t:'규칙적이고 아주 보통이다', sc:{}}
+     {t:'갈비뼈가 양옆으로 넓게 벌어져 있고 윗배가 풍만한 느낌이다', main:{태음인:3}},
+     {t:'갈비뼈가 직각에 가깝게 벌어져 있다', main:{소양인:3}},
+     {t:'갈비뼈가 좁게 모여 있어 V자처럼 날카롭게 파인 느낌이다', main:{소음인:3}},
+     {t:'잘 모르겠다', main:{}}
    ]},
 
-  {id:'d4', type:'choice', cat:'대변 형태', col:'#6B4E3D', num:15,
-   text:'변비가 생기면 어떤 증상이 동반되나요?',
+  {id:'p1_meat', type:'bool', phase:1, weight:2,
+   text:'소고기·돼지고기·닭고기 등 고기류를 평생 아무 탈 없이 아주 잘 먹는다',
+   hint:'특정 고기만이 아니라 고기 전체를 기준으로 답해주세요',
+   yes:{main:{태양인:-4}}, no:{main:{}}},
+
+  {id:'p1_yangyang', type:'bool', phase:1, weight:3,
+   text:'음식을 삼킬 때 자주 걸리는 느낌이 나거나 구역질·구토가 반복된다',
+   hint:'한 번 체한 것이 아니라, 평소에 반복적으로 나타나는 증상을 기준으로 답해주세요',
+   yes:{main:{태양인:5}, sub:{태양인내촉:3}}, no:{main:{}}},
+
+  {id:'p1_urine_taeyang', type:'bool', phase:1, weight:2,
+   text:'몸이 건강할 때 소변 양이 유독 많고 자주 보며 매우 시원하게 본다',
+   hint:'평소 건강한 상태를 기준으로 답해주세요',
+   yes:{main:{태양인:3}}, no:{main:{}}},
+];
+
+/* ─ 2단계 질문: 계열 확정 ─ */
+/* 각 질문은 targetMain 속성으로 해당 체질에만 노출됨 */
+const QS_PHASE2 = [
+
+  /* ── 태음인 계열 구분 ── */
+  {id:'p2_teum_coffee', type:'choice', phase:2, targetMain:'태음인', weight:4,
+   text:'커피나 에너지음료처럼 잠을 깨는 음료를 마시면 어떤가요?',
+   hint:'어린이는 초콜릿 음료나 탄산음료를 마신 경험을 기준으로 답해도 됩니다',
    opts:[
-     {t:'구고(입이 씀)·항강(뒷목 뻐근)이 동반된다', sc:cap({태음인간계:2})},
-     {t:'두통·냉두통이 심해진다', sc:cap({소양인비계:2})},
-     {t:'두통과 구조(입 건조)·구취가 생긴다', sc:cap({소양인위계:2})},
-     {t:'별로 불편하지 않거나 변비가 거의 없다', sc:{}}
+     {t:'아무렇지 않거나 오히려 잠을 더 잘 잔다', sub:{태음인위완계:4}},
+     {t:'많이 마시면 잠이 안 오거나 가슴이 두근거린다', sub:{태음인간계:4}},
+     {t:'조금만 마셔도 잠을 전혀 이루지 못한다', sub:{태음인간계:5}},
+     {t:'마셔본 적이 없어서 잘 모른다', sub:{}}
    ]},
 
-  /* ─── 필터 f2: 변비에도 열감·답답함 없음 ─── */
-  {id:'f2', type:'bool', cat:'체질 필터', col:'#8B6F5E', num:16,
-   text:'2~3일 이상 대변을 못 봐도 가슴 답답함이나 뚜렷한 열감 없이 견딜 만하다',
-   yes:{penalty:'소양인'}, no:{}},
-
-  {id:'d5', type:'bool', cat:'대변 형태', col:'#6B4E3D', num:17,
-   text:'설사 후 기운이 심하게 빠지고 물도 마시지 않게 된다',
-   hint:'소음인의 특징적 설사 반응',
-   yes:{sc:cap({소음인위계:2,소음인신계:1})}, no:{sc:cap({소양인비계:1,소양인위계:1})}},
-
-  {id:'d6', type:'choice', cat:'대변 형태', col:'#6B4E3D', num:18,
-   text:'평소 방귀가 나오는 빈도(횟수)와 냄새는 어떠한가요?',
+  {id:'p2_teum_stool', type:'choice', phase:2, targetMain:'태음인', weight:4,
+   text:'평소 대변의 경향은 어느 쪽에 가깝습니까?',
+   hint:'아픈 날이 아닌 평소 건강한 상태를 기준으로 골라주세요',
    opts:[
-     {t:'시도 때도 없이 자주 나오는 편인데, 의외로 냄새는 거의 없다 (다발/무취)', sc:cap({소양인비계:2,소음인위계:2,태음인위완계:2})},
-     {t:'가끔 어쩌다 한 번 나오는 편인데, 한 번 나올 때마다 악취가 유독 심하다 (소발/악취)', sc:cap({소양인위계:2,소음인신계:2,태음인간계:2})},
-     {t:'잘 모르겠다', sc:{}}
+     {t:'무른 편이거나 묽게 나오는 경향이다', sub:{태음인위완계:4}},
+     {t:'단단하고 굳은 편이다', sub:{태음인간계:4}},
+     {t:'중간 정도이며 잘 모르겠다', sub:{}}
    ]},
 
-  {id:'d7', type:'choice', cat:'대변 형태', col:'#6B4E3D', num:19,
-   text:'컨디션이 아주 좋을 때, 소변과 대변의 양상은 어떠한가요?',
+  {id:'p2_teum_color', type:'choice', phase:2, targetMain:'태음인', weight:3,
+   text:'평소 얼굴빛은 어떠한가요?',
+   hint:'화장 전, 아침에 일어났을 때의 자연스러운 안색을 기준으로 골라주세요',
    opts:[
-     {t:'소변 양이 유독 많고 자주 보며, 대변도 굵직하고 미끄럽게 많은 양을 시원하게 본다', sc:cap({태양인외감:2,태양인내촉:2})},
-     {t:'이러한 특이점이 없거나 보통이다', sc:{}}
+     {t:'창백하거나 약간 푸른 느낌이다', sub:{태음인위완계:3}},
+     {t:'누렇거나 붉거나 어두운 편이다', sub:{태음인간계:3}},
+     {t:'뺨에 홍조나 피지가 많다', sub:{태음인간계:3}},
+     {t:'보통이다', sub:{}}
    ]},
 
-  /* ─── PART 5: 외형 지표 ─── */
-  {id:'e1', type:'choice', cat:'외형 지표', col:'#7A5C8B', num:20,
-   text:'평소 얼굴빛(안색)이 어떤가요?',
+  {id:'p2_teum_constip', type:'choice', phase:2, targetMain:'태음인', weight:3,
+   text:'변비가 생기면 어떤 증상이 함께 나타나나요?',
+   hint:'가끔이라도 변비가 생긴 경험이 있다면 그때를 기준으로 골라주세요',
    opts:[
-     {t:'창백하고 약간 푸른 느낌이다 (청백색)', sc:cap({태음인위완계:2})},
-     {t:'약간 누렇거나 붉거나 어두운 편이다 (황·적·흑)', sc:cap({태음인간계:2})},
-     {t:'뺨에 홍조나 피지가 유독 많다', sc:cap({태음인간계:2})},
-     {t:'보통이다', sc:{}}
+     {t:'입이 씁쓸하고 뒷목이 뻣뻣해진다', sub:{태음인간계:4}},
+     {t:'별로 불편하지 않거나 변비가 거의 없다', sub:{태음인위완계:2}},
+     {t:'두통이 생기거나 가슴이 답답해진다', sub:{태음인위완계:1, 태음인간계:1}}
    ]},
 
-  {id:'e2', type:'choice', cat:'외형 지표', col:'#7A5C8B', num:21,
-   text:'얼굴형과 턱(하악)의 전체적인 느낌은 어떠한가요?',
+  {id:'p2_teum_water', type:'choice', phase:2, targetMain:'태음인', weight:3,
+   text:'평소 물 마시는 온도와 양상은 어떠한가요?',
+   hint:'가장 자연스럽게 마시게 되는 습관을 골라주세요',
    opts:[
-     {t:'턱선이 두툼하고 전체 체격이 묵직하며 안정감이 있다 (소의 형상)', sc:cap({태음인위완계:2,태음인간계:2})},
-     {t:'얼굴과 목이 긴 편(말상)이며 턱이 두터고 각진 느낌을 준다', sc:cap({소양인위계:2,소양인비계:2})},
-     {t:'얼굴이 갸름하고, 턱이 얇고 살집이 없어 뾰족하거나 얌전해 보인다 (당나귀 형상)', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'보통이거나 잘 모르겠다', sc:{}}
+     {t:'따뜻한 물을 선호하고 물을 많이 마시지 않는다', sub:{태음인위완계:3}},
+     {t:'찬물을 즐겨 찾는다', sub:{태음인간계:3}},
+     {t:'아플 때는 냉수를 마시고, 건강할 때는 물을 거의 마시지 않는 편이다', sub:{태음인위완계:2}},
+     {t:'잘 모르겠다', sub:{}}
    ]},
 
-  {id:'e3', type:'choice', cat:'외형 지표', col:'#7A5C8B', num:22, viz:'costal',
-   text:'명치 아래 갈비뼈가 벌어진 각도(늑골각)는 어떠한가요?',
-   hint:'양손으로 본인의 명치 아래 윗배를 만졌을 때, 갈비뼈가 양옆으로 넓게 벌어진 느낌(90도 이상)인가요, 아니면 좁게 닫혀 날카로운 V자 모양(90도 이하)인가요?',
+  /* ── 소양인 계열 구분 ── */
+  {id:'p2_yang_handsweat', type:'choice', phase:2, targetMain:'소양인', weight:5,
+   text:'손발의 온도와 손발바닥 땀 양상은 어떠한가요?',
+   hint:'봄·가을·겨울 기준, 평소 가장 자주 느끼는 상태를 골라주세요',
    opts:[
-     {t:'90도 이상으로 넓게 벌어져 있고 윗배 부분이 풍만하다', sc:cap({태음인위완계:2,태음인간계:2})},
-     {t:'90도 전후의 직각에 가까운 형태를 이룬다', sc:cap({소양인위계:2,소양인비계:2})},
-     {t:'90도 이하로 좁게 닫혀 있어 날카로운 V자(예각) 모양으로 파여 있다', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'잘 모르겠다', sc:{}}
+     {t:'계절에 상관없이 손발이 차갑고 손발바닥에 땀이 거의 없어 건조하다', sub:{소양인비계:5}},
+     {t:'손발에 열이 많아 따뜻하거나 뜨겁고 손발바닥에 땀이 잘 찬다', sub:{소양인위계:5}},
+     {t:'그 중간이거나 잘 모르겠다', sub:{}}
    ]},
 
-  {id:'e4', type:'choice', cat:'외형 지표', col:'#7A5C8B', num:23, viz:'body-type',
-   text:'본인의 전체적인 체형과 뒷목 발달 정도는 어느 쪽에 가깝습니까?',
+  {id:'p2_yang_fart', type:'choice', phase:2, targetMain:'소양인', weight:4,
+   text:'평소 방귀가 나오는 빈도와 냄새는 어떠한가요?',
+   hint:'평소 건강한 상태를 기준으로 골라주세요',
    opts:[
-     {t:'살이 잘 찌지 않는 편에 비해 목덜미(뒷목)가 유독 굵고 기세 좋게 발달해 있으며 안색이 희고 맑다', sc:cap({태양인외감:2,태양인내촉:2})},
-     {t:'체격이 묵직하고 턱선이 두툼하며 안정감이 있다', sc:cap({태음인위완계:1,태음인간계:1})},
-     {t:'얼굴과 목이 긴 편이며 뺨이나 턱이 각진 느낌이다', sc:cap({소양인비계:1,소양인위계:1})},
-     {t:'얼굴이 갸름하고 턱이 얇으며 살집이 없어 얌전해 보인다', sc:cap({소음인신계:1,소음인위계:1})}
+     {t:'자주 나오지만 냄새가 거의 없다', sub:{소양인비계:4}},
+     {t:'가끔 나오는데 한 번 나올 때 냄새가 매우 심하다', sub:{소양인위계:4}},
+     {t:'잘 모르겠다', sub:{}}
    ]},
 
-  /* ─── 필터 f5: 육류 소화 ─── */
-  {id:'f5', type:'bool', cat:'체질 필터', col:'#8B6F5E', num:24,
-   text:'소고기·돼지고기·닭고기 등 육류를 평생 아무 소화 장애 없이 아주 잘 먹는다',
-   yes:{penalty:'태양인'}, no:{}},
-
-  {id:'e5', type:'bool', cat:'외형 지표', col:'#7A5C8B', num:25,
-   text:'음식을 삼키기 어렵거나 자주 구역질·구토가 나는 식도 증상이 있다 (열격·반위)',
-   hint:'태양인 내촉소장병의 핵심 증상',
-   yes:{sc:{태양인내촉:4}}, no:{sc:{}}},
-
-  /* ─── PART 6: 반응 지표 ─── */
-  {id:'r1', type:'choice', cat:'반응 지표', col:'#6B7A4E', num:26,
-   text:'인삼·홍삼을 복용했을 때 반응은 어떠한가요?',
+  {id:'p2_yang_constip', type:'choice', phase:2, targetMain:'소양인', weight:3,
+   text:'변비가 생기면 어떤 증상이 함께 나타나나요?',
+   hint:'가끔이라도 변비가 생긴 경험이 있다면 그때를 기준으로 골라주세요',
    opts:[
-     {t:'기운이 나고 잘 맞아서 즐겨 먹는다', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'얼굴에 면포·열이 오르거나 가슴이 답답하다', sc:cap({소양인비계:2,소양인위계:2})},
-     {t:'두통이나 혈압 상승이 일어난다', sc:cap({태음인위완계:1,태음인간계:1})},
-     {t:'복용 경험 없거나 잘 모르겠다', sc:{}}
+     {t:'머리가 차갑게 아프고 손발이 더 차가워진다', sub:{소양인비계:3}},
+     {t:'입이 바짝 마르고 냄새가 심해지며 가슴이 답답하다', sub:{소양인위계:3}},
+     {t:'변비가 거의 없거나 잘 모르겠다', sub:{}}
    ]},
 
-  {id:'r2', type:'choice', cat:'반응 지표', col:'#6B7A4E', num:27,
-   text:'평소 커피를 마셨을 때 신체적 반응은 어떠한가요?',
+  {id:'p2_yang_water', type:'choice', phase:2, targetMain:'소양인', weight:3,
+   text:'물 마시는 양과 온도 선호는 어떠한가요?',
+   hint:'평소 자연스러운 음수 습관을 기준으로 골라주세요',
    opts:[
-     {t:'아무렇지 않거나 오히려 각성 효과 없이 잠을 잘 잔다', sc:cap({태음인위완계:2,소양인위계:1})},
-     {t:'평소엔 괜찮으나 2잔 이상 마시면 불면이나 두근거림이 온다', sc:cap({태음인간계:2})},
-     {t:'단 1잔만 마셔도 가슴이 두근거리고 밤에 잠을 전혀 이루지 못한다', sc:cap({소양인비계:2,태음인간계:1})},
-     {t:'마시면 가슴이 조이고 입이 바짝 마르며 속쓰림과 불면이 동반된다', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'평소 커피를 거의 마시지 않아 잘 모른다', sc:{}}
+     {t:'물을 잘 마시지 않고, 찬 것을 먹으면 배가 불편해지기 쉽다', sub:{소양인비계:3}},
+     {t:'찬물을 많이 즐기고 자다 깨서 얼음물을 찾을 정도다', sub:{소양인위계:3}},
+     {t:'보통이다', sub:{}}
    ]},
 
-  {id:'r3', type:'choice', cat:'반응 지표', col:'#6B7A4E', num:28,
-   text:'평소 고기(육류)를 먹었을 때와 해산물을 먹었을 때의 소화 상태는 어떠한가요?',
+  /* ── 소음인 계열 구분 ── */
+  {id:'p2_eum_main_type', type:'choice', phase:2, targetMain:'소음인', weight:5,
+   text:'평소 손발의 온도와 땀 양상은 어떠한가요?',
+   hint:'봄·가을·겨울 기준, 평소 가장 자주 느끼는 상태를 골라주세요',
    opts:[
-     {t:'소·돼지·닭 등 육류 일체를 먹으면 소화가 안 되지만, 조개류나 생선 같은 해산물은 속이 편하다', sc:cap({태양인외감:2,태양인내촉:2})},
-     {t:'돼지고기를 먹으면 붓거나 설사·복통이 심하지만, 닭고기나 소고기는 잘 맞는다', sc:cap({태음인위완계:1,태음인간계:1,소음인신계:1,소음인위계:1})},
-     {t:'닭고기를 먹으면 체하거나 열이 오르지만, 돼지고기를 먹으면 속이 아주 편하다', sc:cap({소양인비계:2,소양인위계:2})},
-     {t:'찬 음식(아이스크림, 냉면 등)을 먹으면 즉시 복통이나 묽은 설사를 한다', sc:cap({소음인위계:2,소음인신계:1})},
-     {t:'특별히 가리는 음식 없이 다 잘 먹거나 해당 없음', sc:{}}
+     {t:'평소엔 손발이 차갑고 땀이 거의 없다. 그런데 몸이 아프면 오히려 온몸에 땀이 많이 난다', sub:{소음인신계:3, 소음인위계:2}},
+     {t:'손발이 따뜻하고 땀이 약간 나며 물을 거의 마시지 않는다', sub:{소음인위수한계:5}},
+     {t:'잘 모르겠다', sub:{}}
    ]},
 
-  {id:'r4', type:'bool', cat:'반응 지표', col:'#6B7A4E', num:29,
-   text:'정서적으로 불안하거나 공황감이 자주 찾아오고 마음이 매우 불안정하다 (불안정지심)',
-   hint:'소음인 위계 중증의 징후',
-   yes:{sc:{소음인위계:3,소음인중풍:2}}, no:{sc:{}}},
-
-  {id:'r5', type:'choice', cat:'반응 지표', col:'#6B7A4E', num:30,
-   text:'최근의 스트레스 상황이 아닌, 평소 본인의 타고난 일 처리 방식이나 행동 성향과 가장 일치하는 것은 무엇인가요?',
+  {id:'p2_eum_fart', type:'choice', phase:2, targetMain:'소음인', weight:5,
+   text:'평소 방귀가 나오는 빈도와 냄새는 어떠한가요?',
+   hint:'평소 건강한 상태를 기준으로 골라주세요',
    opts:[
-     {t:'답답한 상황을 잘 못 참으며, 생각이 들면 즉시 행동으로 옮겨야 직성이 풀린다', sc:cap({소양인비계:1,소양인위계:1})},
-     {t:'어떤 결정을 내리기 전에 사소한 부분까지 여러 번 확인해야 비로소 안심이 된다', sc:cap({소음인신계:1,소음인위계:1})},
-     {t:'주변 환경이 바뀌어도 크게 동요하지 않으며, 한 번 시작한 일은 끈기 있게 밀고 나간다', sc:cap({태음인위완계:1,태음인간계:1})},
-     {t:'새로운 일이나 남들이 가지 않은 변화를 두려워하지 않고 가장 먼저 과감하게 시도한다', sc:cap({태양인외감:1,태양인내촉:1})},
-     {t:'평범하거나 잘 모르겠다', sc:{}}
+     {t:'가끔 나오는데 한 번 나올 때 냄새가 매우 지독하다', sub:{소음인신계:5}},
+     {t:'자주 나오지만 냄새가 거의 없다', sub:{소음인위계:5}},
+     {t:'잘 모르겠다', sub:{}}
    ]},
 
-  /* ─── PART 8: 부인과 지표 (여성 전용) ─── */
-  {id:'wf1', type:'choice', cat:'부인과 지표', col:'#9E7A8B', num:31, female:true,
-   text:'20~35세 사이(혹은 출산 전) 가장 건강했던 시기를 기준으로, 평소 생리 기간과 생리량은?',
+  {id:'p2_eum_stool_change', type:'choice', phase:2, targetMain:'소음인', weight:5,
+   text:'평소 대변 상태와 변화 경향은 어떠한가요?',
+   hint:'평소 건강한 상태와 변화 패턴을 기준으로 골라주세요',
    opts:[
-     {t:'기간이 4~7일 정도로 길고, 양이 가장 많은 편이었다', sc:cap({태음인위완계:2,태음인간계:2}), bonus:{태음인간계:1}},
-     {t:'기간이 2~5일 정도였으며, 양은 보통 수준이었다', sc:cap({소음인신계:2,소음인위계:2})},
-     {t:'기간이 3일 내외로 짧고 양이 매우 적었다', sc:cap({소양인비계:2,소양인위계:2})},
-     {t:'해당 없음 / 잘 모르겠다', sc:{}, skip:true}
+     {t:'평소 묽은 변이 거의 없고, 변을 오래 못 보면 딱딱하게 굳어지는 경향이다', sub:{소음인신계:5}},
+     {t:'평소엔 굳은 변이지만, 긴장하거나 음식이 맞지 않으면 쉽게 묽어진다', sub:{소음인위계:5}},
+     {t:'항상 묽거나 설사에 가깝고, 물은 거의 마시지 않는다', sub:{소음인위수한계:4}},
+     {t:'잘 모르겠다', sub:{}}
    ]},
 
-  {id:'wf2', type:'choice', cat:'부인과 지표', col:'#9E7A8B', num:32, female:true,
-   text:'생리통이 있을 때, 주로 어느 부위가 가장 아프고 불편한가요?',
+  {id:'p2_eum_diarrhea_energy', type:'choice', phase:2, targetMain:'소음인', weight:4,
+   text:'설사 후 얼마나 힘이 빠지나요?',
+   hint:'설사한 경험이 있다면 그때를 기준으로 골라주세요',
    opts:[
-     {t:'허리 아래, 엉치뼈나 꼬리뼈 부위(요둔통·미골통)가 끊어질 듯 아프다', sc:cap({소양인비계:2,소양인위계:2})},
-     {t:'아랫배(하복부)가 주로 아프고, 심하면 허리까지 아프다', sc:cap({소음인신계:2,소음인위계:2,태음인위완계:2,태음인간계:2})},
-     {t:'평소 생리통이 거의 없다 / 해당 없음', sc:{}, skip:true}
+     {t:'기운이 극심하게 빠지고 물도 마시고 싶지 않게 된다', sub:{소음인신계:4}},
+     {t:'다소 기운이 빠지지만 일상생활은 가능하다', sub:{소음인위계:3}},
+     {t:'설사를 거의 하지 않아 잘 모른다', sub:{소음인신계:1}}
+   ]},
+
+  {id:'p2_eum_water', type:'choice', phase:2, targetMain:'소음인', weight:4,
+   text:'평소와 몸이 아플 때 물 마시는 양상은 어떠한가요?',
+   hint:'아팠던 경험을 떠올려 평소와 비교해서 골라주세요',
+   opts:[
+     {t:'평소엔 찬물을 마시는 편이다. 그런데 아프면 오히려 물이 당기지 않는다', sub:{소음인신계:4}},
+     {t:'평소부터 물을 적게 마신다. 아프면 찬물을 전혀 마시지 못한다', sub:{소음인위계:4}},
+     {t:'평소 물을 거의 마시지 않는다. 배가 차고 대변이 항상 묽다', sub:{소음인위수한계:4}},
+     {t:'잘 모르겠다', sub:{}}
+   ]},
+
+  {id:'p2_eum_ginseng', type:'choice', phase:2, targetMain:'소음인', weight:3,
+   text:'인삼·홍삼을 먹었을 때 몸의 반응은 어떠한가요?',
+   hint:'홍삼 젤리·캔디·음료 등 먹어본 경험을 기준으로 답해도 됩니다',
+   opts:[
+     {t:'기운이 나고 잘 맞아서 즐겨 먹는다', sub:{소음인신계:2, 소음인위계:2, 소음인위수한계:2}},
+     {t:'먹으면 머리가 아프거나 가슴이 답답해진다', sub:{}},
+     {t:'먹어본 적이 없어서 잘 모른다', sub:{}}
+   ]},
+
+  /* ── 공통 보조 지표 ── */
+  {id:'p2_ginseng_react', type:'choice', phase:2, targetMain:'ALL', weight:2,
+   text:'인삼·홍삼을 먹었을 때 몸의 반응은 어떠한가요?',
+   hint:'홍삼 젤리·캔디·음료 등 먹어본 경험을 기준으로 답해도 됩니다',
+   opts:[
+     {t:'기운이 나고 잘 맞아서 즐겨 먹는다', sub:{소음인신계:2, 소음인위계:2, 소음인위수한계:2}},
+     {t:'얼굴이 달아오르거나 뾰루지가 나고 가슴이 답답하다', sub:{소양인비계:2, 소양인위계:2}},
+     {t:'두통이 오거나 머리가 띵하고 아프다', sub:{태음인위완계:1, 태음인간계:1}},
+     {t:'먹어본 적이 없어서 잘 모른다', sub:{}}
+   ]},
+
+  {id:'p2_pork_chicken', type:'choice', phase:2, targetMain:'ALL', weight:2,
+   text:'닭고기와 돼지고기를 먹었을 때 소화 반응은 어느 쪽인가요?',
+   hint:'평소 먹고 난 후의 반응을 기준으로 골라주세요',
+   opts:[
+     {t:'닭고기를 먹으면 체하거나 열이 오르고, 돼지고기는 오히려 속이 편하다', sub:{소양인비계:2, 소양인위계:2}},
+     {t:'돼지고기를 먹으면 붓거나 설사·복통이 오고, 닭고기는 잘 맞는다', sub:{소음인신계:1, 소음인위계:1, 소음인위수한계:1}},
+     {t:'소고기·돼지고기·닭고기 등 육류 전체가 소화 안 된다', sub:{태양인외감:2, 태양인내촉:2}},
+     {t:'특별히 가리지 않고 다 잘 먹는다', sub:{}}
+   ]},
+
+  {id:'p2_emotion', type:'choice', phase:2, targetMain:'ALL', weight:1,
+   text:'평소 내 성격은 어느 쪽과 가장 가깝나요?',
+   hint:'요즘 상황이 아닌, 원래 타고난 성격을 기준으로 골라주세요',
+   opts:[
+     {t:'답답한 일이 생기면 바로 해결해야 마음이 편하다 (행동이 먼저)', sub:{소양인비계:1, 소양인위계:1}},
+     {t:'뭔가 결정할 때 여러 번 확인하고 또 확인해야 안심이 된다 (신중한 편)', sub:{소음인신계:1, 소음인위계:1, 소음인위수한계:1}},
+     {t:'한번 시작한 일은 끝까지 밀고 나가며 잘 흔들리지 않는다 (꾸준한 편)', sub:{태음인위완계:1, 태음인간계:1}},
+     {t:'새로운 것을 두려워하지 않고 남들보다 먼저 도전한다 (개척형)', sub:{태양인외감:1, 태양인내촉:1}},
+     {t:'잘 모르겠다', sub:{}}
+   ]},
+];
+
+/* ─ 여성 전용 ─ */
+const QS_FEMALE = [
+  {id:'wf_period', type:'choice', phase:2, targetMain:'ALL', female:true, weight:2,
+   text:'건강했던 시기 기준, 생리 기간과 생리량은?',
+   opts:[
+     {t:'기간 4~7일로 길고, 양이 가장 많은 편이었다', sub:{태음인위완계:2, 태음인간계:3}},
+     {t:'기간 3~5일, 양은 보통 수준이었다', sub:{소음인신계:2, 소음인위계:2, 소음인위수한계:2}},
+     {t:'기간 3일 내외로 짧고 양이 적었다', sub:{소양인비계:2, 소양인위계:2}},
+     {t:'해당 없음', sub:{}}
+   ]},
+
+  {id:'wf_pain', type:'choice', phase:2, targetMain:'ALL', female:true, weight:2,
+   text:'생리통이 있을 때 주로 어느 부위가 아픕니까?',
+   opts:[
+     {t:'꼬리뼈·엉치뼈(미골통·요둔통)가 끊어질 듯 아프다', sub:{소양인비계:2, 소양인위계:2}},
+     {t:'아랫배(하복부)가 주로 아프고, 심하면 허리까지 아프다', sub:{소음인신계:1, 소음인위계:1, 소음인위수한계:1, 태음인위완계:1, 태음인간계:1}},
+     {t:'생리통이 거의 없다 / 해당 없음', sub:{}}
    ]}
 ];
 
-const WF_MAX_SCORES = {
-  wf1: { 태음인위완계:3, 태음인간계:3, 소음인신계:2, 소음인위계:2, 소양인비계:2, 소양인위계:2 },
-  wf2: { 소양인비계:2, 소양인위계:2, 소음인신계:2, 소음인위계:2, 태음인위완계:2, 태음인간계:2 }
-};
-
-/* ═══════════════════════════════
-   동점 제거 테이블
-═══════════════════════════════ */
+/* ─ 동점 브레이크 ─ */
 const TBS = [
   {pair:['태음인위완계','태음인간계'],
-   q:'커피를 마셨을 때 어떤가요?',
-   a:['아무렇지 않거나 오히려 잠을 잘 잔다','2잔 이상이면 불면·두근거림이 온다'],
+   q:'커피 한 잔을 마시면 어떤가요?',
+   a:['아무렇지 않거나 잠을 더 잘 잔다','불면이나 두근거림이 온다'],
    w:['태음인위완계','태음인간계']},
   {pair:['소양인비계','소양인위계'],
-   q:'평소 손발의 온도와 손발바닥의 땀 양상은?',
-   a:['사계절 내내 손발이 차갑고 땀이 거의 없어 피부가 건조하다','손발에 열이 많아 늘 따뜻하거나 뜨거우며 손발바닥에 땀이 잘 찬다'],
+   q:'손발의 온도는 평소 어떤가요?',
+   a:['손발이 차갑고 건조하다 (사시냉)','손발이 따뜻하거나 뜨겁다 (사시온)'],
    w:['소양인비계','소양인위계']},
   {pair:['소음인신계','소음인위계'],
-   q:'평소 음수 습관은?',
-   a:['물을 거의 마시지 않는다 (불음수)','물을 조금씩은 마시는 편이다'],
-   w:['소음인위계','소음인신계']},
-  {pair:['태음인위완계','소음인위계'],
-   q:'땀을 흠뻑 흘리고 나면?',
-   a:['개운하고 상쾌하다','기운이 빠지고 어지럽다'],
-   w:['태음인위완계','소음인위계']},
-  {pair:['소양인비계','소음인위계'],
-   q:'대변이 굵고 짧게 나오는 편인가요?',
-   a:['예, 굵고 짧게 나온다','아니오, 길게 나오거나 묽다'],
-   w:['소양인비계','소음인위계']},
+   q:'방귀가 나올 때 냄새는 어떤가요?',
+   a:['가끔 나오지만 악취가 매우 지독하다','자주 나오지만 냄새가 거의 없다'],
+   w:['소음인신계','소음인위계']},
+  {pair:['소음인위계','소음인위수한계'],
+   q:'평소 물 마시는 양상은?',
+   a:['평소에도 물을 적게 마신다 (음식·스트레스에 활변)','물을 거의 마시지 않으며 항상 대변이 묽다'],
+   w:['소음인위계','소음인위수한계']},
+  {pair:['소음인신계','소음인위수한계'],
+   q:'설사 후 기운이 어떤가요?',
+   a:['기운이 극심하게 빠지고 물도 마시지 않게 된다','설사를 거의 하지 않는다'],
+   w:['소음인신계','소음인위수한계']},
   {pair:['소양인위계','태음인간계'],
-   q:'변비 시 어떤 증상이 주로 동반되나요?',
-   a:['입안이 바짝 마르고(구조) 구취가 심해지며 가슴이 답답하다','입맛이 씁쓸하고(구고) 뒷목·어깨가 뻣팎하게 굳어온다(항강)'],
-   w:['소양인위계','태음인간계']}
+   q:'변비 시 어떤 증상이 동반되나요?',
+   a:['입이 마르고 구취가 심해지며 가슴 답답 (구조)','입이 씁쓸하고 뒷목이 뻣뻣 (구고·항강)'],
+   w:['소양인위계','태음인간계']},
+  {pair:['태양인외감','태양인내촉'],
+   q:'음식을 삼키기 어려운 증상이 자주 있나요?',
+   a:['아니다','자주 구역질·삼킴 곤란이 있다'],
+   w:['태양인외감','태양인내촉']},
 ];
 
+/* ══════════════════════════════════════════════════════
+   상태 관리
+══════════════════════════════════════════════════════ */
 let st = {
-  page:'gender', gender:null, qi:0, ans:{},
-  penaltyMap:{}, sc:{}, result:null, tb:null,
-  confirmedGrade:null
+  page:'start', gender:null,
+  phase:1, qi:0,
+  ans:{},
+  mainSc:{},   // 주체질 점수
+  subSc:{},    // 계열 점수
+  confirmedMain:null,
+  result:null, tb:null, confirmedGrade:null
 };
 
 function initSc() {
-  st.sc = {};
-  ALL_SUBS.forEach(k => st.sc[k] = 0);
-  MAINS.forEach(k => st.sc[k] = 0);
-  st.penaltyMap = {};
-  ALL_SUBS.forEach(k => st.penaltyMap[k] = 0);
+  st.mainSc = {}; MAINS.forEach(m => st.mainSc[m] = 0);
+  st.subSc  = {}; ALL_SUBS.forEach(k => st.subSc[k] = 0);
 }
 initSc();
 
 function visibleQs() {
-  return QS.filter(q => !q.female || st.gender === 'female');
+  const ph1 = QS_PHASE1;
+  let ph2 = QS_PHASE2.concat(QS_FEMALE.filter(q => st.gender === 'female'));
+  // 2단계는 확정된 주체질 + ALL 타겟만
+  if (st.confirmedMain) {
+    ph2 = ph2.filter(q => q.targetMain === st.confirmedMain || q.targetMain === 'ALL');
+  }
+  return st.phase === 1 ? ph1 : ph2;
 }
 
+function totalProgress() {
+  const ph1 = QS_PHASE1.length;
+  const ph2est = QS_PHASE2.filter(q => q.targetMain === (st.confirmedMain||'태음인') || q.targetMain === 'ALL').length
+    + (st.gender === 'female' ? QS_FEMALE.length : 0);
+  const done = (st.phase === 1 ? st.qi : ph1 + st.qi);
+  return Math.round((done / (ph1 + ph2est)) * 100);
+}
+
+/* ══════════════════════════════════════════════════════
+   렌더링
+══════════════════════════════════════════════════════ */
 function render() {
   const area = document.getElementById('area');
   const pbar = document.getElementById('pbar');
-  const vqs = visibleQs();
-  if (st.page === 'gender') { pbar.style.width='0%'; renderGender(area); return; }
-  if (st.page === 'start')  { pbar.style.width='0%'; renderStart(area); return; }
-  if (st.page === 'q')      { pbar.style.width=Math.round((st.qi/vqs.length)*100)+'%'; renderQ(area,vqs); return; }
-  if (st.page === 'tie')    { pbar.style.width='97%'; renderTie(area); return; }
-  if (st.page === 'result') { pbar.style.width='100%'; renderResult(area); return; }
+  pbar.style.width = (st.page === 'start' ? 0 : st.page === 'result' ? 100 : totalProgress()) + '%';
+  if (st.page === 'start')  { renderStart(area); return; }
+  if (st.page === 'q')      { renderQ(area); return; }
+  if (st.page === 'tie')    { renderTie(area); return; }
+  if (st.page === 'result') { renderResult(area); return; }
 }
 
-function renderGender(a) {
-  a.innerHTML = `<div class="gender-card">
-  <div class="si">🌿</div>
-  <div class="gender-title">진단을 시작하기 전에</div>
-  <div class="gender-sub">성별을 선택해주세요.<br>여성의 경우 부인과 지표가 추가되어<br>더 정밀한 진단이 가능합니다.</div>
-  <div class="gender-btns">
-    <button class="g-btn" onclick="setGender('male')"><div class="g-icon">👤</div>남성</button>
-    <button class="g-btn" onclick="setGender('female')"><div class="g-icon">👤</div>여성</button>
+function renderStart(a) {
+  // 성별 확정 전에는 남성 기준으로 예상 문항 수 계산
+  const ph1 = QS_PHASE1.length;
+  const ph2 = QS_PHASE2.length + (st.gender === 'female' ? QS_FEMALE.length : 0);
+  const totalQ = ph1 + ph2;
+  const qLabel = st.gender ? `${totalQ}문항` : `${ph1 + QS_PHASE2.length}~${ph1 + QS_PHASE2.length + QS_FEMALE.length}문항`;
+
+  a.innerHTML = `<div class="card">
+  <div class="start-hero">
+    <div class="start-eye">나를 위한 건강지도</div>
+    <div class="start-t">체질 자가 진단</div>
+    <div class="start-d">김주式 사상의학 임상 원전 기반</div>
+  </div>
+  <div class="start-body">
+    <div class="info-grid">
+      <div class="info-cell"><div class="ic-l">소요 시간</div><div class="ic-v">약 8~12분</div></div>
+      <div class="info-cell"><div class="ic-l">문항 수</div><div class="ic-v">${qLabel}</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-light);margin-bottom:14px;text-align:center">성별을 선택해 주세요 — 여성은 부인과 관련 문항이 추가됩니다</p>
+    <div class="gender-row">
+      <button class="gbtn${st.gender==='male'?' sel':''}" onclick="setGender('male')">
+        <div class="gbtn-ico">👤</div>남성
+      </button>
+      <button class="gbtn${st.gender==='female'?' sel':''}" onclick="setGender('female')">
+        <div class="gbtn-ico">👤</div>여성
+      </button>
+    </div>
+    <button class="btn-start" onclick="startQ()" ${st.gender?'':'disabled'}>진단 시작하기</button>
+    <p class="disc">본 진단은 참고용이며 정확한 체질 판정은 반드시 한의사의 진료가 필요합니다</p>
   </div></div>`;
 }
 
-function setGender(g) { st.gender = g; st.page = 'start'; render(); }
+function setGender(g) { st.gender = g; render(); }
+function startQ() { st.page='q'; st.phase=1; st.qi=0; render(); }
 
-function renderStart(a) {
+const PH_LABEL = {1:'1단계 · 주체질 확정', 2:'2단계 · 계열 확정'};
+const PH_CLS   = {1:'phase-1',2:'phase-2'};
+const PH_DESC  = {
+  1:'외형·대변·수족 지표로 주체질을 결정합니다',
+  2:'생리 지표로 세부 계열을 확정합니다'
+};
+
+function renderQ(a) {
   const vqs = visibleQs();
-  a.innerHTML = `<div class="start-card">
-  <div class="si">🌿</div>
-  <div class="st">나를 위한 건강지도</div>
-  <div class="st2">자가 진단법</div>
-  <div class="sd">김주식 사상의학 임상 원전(2강·3강) 기반<br>수족온도 → 음수 → 대변 → 외형·반응 순서로 감별합니다.</div>
-  <div class="sg">
-    <div class="sc"><div class="sl">소요 시간</div><div class="sv">약 8~12분</div></div>
-    <div class="sc"><div class="sl">문항 수</div><div class="sv">${vqs.length}문항</div></div>
-    <div class="sc"><div class="sl">판정 계열</div><div class="sv">9대 세부 계열</div></div>
-    <div class="sc"><div class="sl">근거</div><div class="sv">임상 원전</div></div>
-  </div>
-  <button class="btn-s" onclick="startQ()">진단 시작하기</button>
-  <p class="disc-s">본 진단은 참고용이며 정확한 체질 판정은 반드시 한의사의 진료가 필요합니다</p>
-  </div>`;
-}
-
-function startQ() { st.page='q'; st.qi=0; render(); }
-
-function renderQ(a, vqs) {
   const q = vqs[st.qi];
   const ans = st.ans[q.id];
-  const prev = st.qi > 0 ? vqs[st.qi-1].cat : null;
-  const secDesc = {
-    '체질 필터':'명확한 배제 조건을 확인합니다',
-    '수족·한출':'원전 1순위 감별 — 수족 온도와 한출 양상',
-    '음수 관계':'원전 2순위 감별 — 음수 온도·구갈 부위',
-    '대변 형태':'원전 핵심 감별 — 굵기·길이·형태·동반 증상',
-    '외형 지표':'안색·체형·특이 외부 지표 확인',
-    '반응 지표':'음식·약재·커피·성정 반응으로 계열 확정',
-    '부인과 지표':'여성 전용 — 생리 지표로 정밀도 향상'
-  };
-  let secHtml = q.cat !== prev ? `<div class="sec-hdr"><b>${q.cat}</b> · ${secDesc[q.cat]||''}</div>` : '';
 
-  let vizHtml = '';
-  if (q.viz === 'stool-width') {
-    vizHtml = `<div class="vis-box">
-      <div class="vis-label">원전 2강 19항 — 대변 굵기 비교</div>
-      <div class="stool-row"><div class="stool-lbl">소양인</div><div class="stool-bar" style="height:22px;width:75%;background:#C8A882;border-radius:20px"></div><div class="stool-desc">제일 굵음</div></div>
-      <div class="stool-row"><div class="stool-lbl">소음인</div><div class="stool-bar" style="height:14px;width:50%;background:#C8A882;border-radius:20px"></div><div class="stool-desc">중간</div></div>
-      <div class="stool-row"><div class="stool-lbl">태음인</div><div class="stool-bar" style="height:8px;width:28%;background:#C8A882;border-radius:20px"></div><div class="stool-desc">제일 가늘음</div></div>
-    </div>`;
-  } else if (q.viz === 'stool-length') {
-    vizHtml = `<div class="vis-box">
-      <div class="vis-label">원전 2강 19항 — 대변 길이 비교</div>
-      <div class="stool-row"><div class="stool-lbl">소음인</div><div class="stool-bar" style="height:12px;width:80%;background:#A8856A;border-radius:20px"></div><div class="stool-desc">제일 길음</div></div>
-      <div class="stool-row"><div class="stool-lbl">태음인</div><div class="stool-bar" style="height:12px;width:52%;background:#A8856A;border-radius:20px"></div><div class="stool-desc">중간</div></div>
-      <div class="stool-row"><div class="stool-lbl">소양인</div><div class="stool-bar" style="height:12px;width:30%;background:#A8856A;border-radius:20px"></div><div class="stool-desc">제일 짧음</div></div>
-    </div>`;
-  } else if (q.viz === 'costal' || q.viz === 'body-type') {
-    vizHtml = `<div class="img-placeholder">
-      <div class="img-ph-icon">🖼</div>
-      <div class="img-ph-text">이미지 플레이스홀더 — 한의원 맞춤 일러스트 삽입 영역</div>
-    </div>`;
+  let tableHtml = '';
+  if (q.viz === 'stool_width') {
+    tableHtml = buildStoolWidthViz();
+  } else if (q.viz === 'stool_shape') {
+    tableHtml = buildStoolShapeViz();
+  } else if (q.viz === 'costal_angle') {
+    tableHtml = buildCostalViz();
+  } else if (q.tableRows) {
+    tableHtml = `<table class="cmp-table">
+      <tr><th>체질</th><th>굵기</th><th>특징</th></tr>
+      ${q.tableRows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}
+    </table>`;
   }
 
   let body = '';
@@ -686,374 +767,466 @@ function renderQ(a, vqs) {
     </div>`;
   } else {
     body = `<div class="opts">` + q.opts.map((o,i) =>
-      `<button class="opt${ans===i?' sel':''}" onclick="aCh(${i})"><div class="odot"></div><span>${o.t}</span></button>`
-    ).join('') + `</div>`;
+      `<button class="opt${ans===i?' sel':''}" onclick="aCh(${i})">
+        <div class="odot"></div><span>${o.t}</span>
+      </button>`).join('') + `</div>`;
   }
 
-  a.innerHTML = secHtml + `<div class="q-card">
-  <div class="q-badge" style="background:${q.col||'#7A9E7E'}">${q.cat}</div>
-  <div class="q-num">문항 ${st.qi+1} / ${vqs.length}</div>
-  <div class="q-text">${q.text}</div>
-  ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
-  ${vizHtml}${body}
-  <div class="nav">
-    <button class="btn-b" onclick="goBack()" ${st.qi===0?'disabled':''}>← 이전</button>
-    <button class="btn-n" onclick="goNext()" ${ans!==undefined?'':'disabled'}>${st.qi===vqs.length-1?'결과 보기':'다음 →'}</button>
+  a.innerHTML = `<div class="card"><div class="q-wrap">
+    <div class="q-text">${q.text}</div>
+    ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
+    ${tableHtml}${body}
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()" ${(st.phase===1&&st.qi===0)?'disabled':''}>← 이전</button>
+      <button class="btn-next" onclick="goNext()" ${ans!==undefined?'':'disabled'}>
+        ${st.qi===vqs.length-1 ? (st.phase===1?'다음 단계 →':'결과 보기') : '다음 →'}
+      </button>
+    </div>
   </div></div>`;
 }
 
 function aBool(v) {
   const vqs = visibleQs();
   const q = vqs[st.qi]; st.ans[q.id] = v;
-  renderQ(document.getElementById('area'), vqs);
-  setTimeout(() => goNext(), 300);
+  renderQ(document.getElementById('area'));
+  setTimeout(() => goNext(), 280);
 }
 
 function aCh(i) {
   const vqs = visibleQs();
   st.ans[vqs[st.qi].id] = i;
-  renderQ(document.getElementById('area'), vqs);
+  renderQ(document.getElementById('area'));
 }
 
-function goBack() { if (st.qi > 0) { st.qi--; render(); } }
+function goBack() {
+  if (st.qi > 0) { st.qi--; render(); return; }
+  if (st.phase === 2) {
+    // 2단계 첫 문항 → 1단계 마지막 문항으로
+    st.phase = 1; st.qi = QS_PHASE1.length - 1; st.confirmedMain = null; render();
+  }
+}
 
 function goNext() {
   const vqs = visibleQs();
   const q = vqs[st.qi];
   if (st.ans[q.id] === undefined) return;
   if (st.qi < vqs.length - 1) { st.qi++; render(); }
-  else calcFinal();
+  else {
+    if (st.phase === 1) calcPhase1();
+    else calcFinal();
+  }
 }
 
-function applyScore(sc) {
-  if (!sc) return;
-  Object.entries(sc).forEach(([k,v]) => {
-    if (st.sc[k] !== undefined) st.sc[k] += v;
-    MAINS.forEach(m => {
-      if (k.startsWith(m) && m !== k && st.sc[m] !== undefined) st.sc[m] += v * 0.4;
-    });
-  });
-}
-
-function applyPenalty(mainKey) {
-  const targets = MAIN_MAP[mainKey] || [];
-  targets.forEach(sub => {
-    st.penaltyMap[sub] = (st.penaltyMap[sub] || 0) + FILTER_PENALTY;
-  });
-}
-
-function calcFinal() {
+/* ── 1단계 계산: 주체질 확정 ── */
+function calcPhase1() {
   initSc();
-  const vqs = visibleQs();
-  const skippedWfIds = new Set();
-
-  vqs.forEach(q => {
+  QS_PHASE1.forEach(q => {
     const a = st.ans[q.id];
     if (a === undefined) return;
-
+    let sc;
     if (q.type === 'bool') {
-      const eff = a === 'yes' ? q.yes : q.no;
-      if (!eff) return;
-      if (eff.penalty) applyPenalty(eff.penalty);
-      if (eff.sc) applyScore(eff.sc);
+      sc = (a === 'yes' ? q.yes : q.no);
+      if (sc.main) applyMainSc(sc.main, q.weight);
+      if (sc.sub)  applySubSc(sc.sub, q.weight);
     } else {
       const opt = q.opts[a];
       if (!opt) return;
-      if (opt.skip) {
-        if (q.female) skippedWfIds.add(q.id);
-        return;
-      }
-      if (opt.sc) applyScore(opt.sc);
-      if (opt.bonus) applyScore(opt.bonus);
+      if (opt.main) applyMainSc(opt.main, q.weight);
+      if (opt.sub)  applySubSc(opt.sub, q.weight);
     }
   });
 
-  ALL_SUBS.forEach(k => {
-    if (st.penaltyMap[k]) st.sc[k] += st.penaltyMap[k];
-  });
+  // 주체질 확정
+  const sorted = MAINS.map(m => ({m, v:st.mainSc[m]})).sort((a,b)=>b.v-a.v);
+  const diff = sorted[0].v - sorted[1].v;
 
-  if (st.gender === 'female' && skippedWfIds.size > 0) {
-    const wfActual = {};
-    ALL_SUBS.forEach(k => { wfActual[k] = 0; });
-    const wfMaxAchievable = {};
-    ALL_SUBS.forEach(k => { wfMaxAchievable[k] = 0; });
-    const wfTotalMax = {};
-    ALL_SUBS.forEach(k => { wfTotalMax[k] = 0; });
-
-    Object.entries(WF_MAX_SCORES).forEach(([qid, maxMap]) => {
-      Object.entries(maxMap).forEach(([sub, maxPt]) => {
-        if (wfTotalMax[sub] !== undefined) wfTotalMax[sub] += maxPt;
-        if (!skippedWfIds.has(qid) && wfMaxAchievable[sub] !== undefined) {
-          wfMaxAchievable[sub] += maxPt;
-        }
-      });
-    });
-
-    vqs.forEach(q => {
-      if (!q.female || skippedWfIds.has(q.id)) return;
-      const a = st.ans[q.id];
-      if (a === undefined) return;
-      const opt = q.opts[a];
-      if (!opt || opt.skip) return;
-      if (opt.sc) {
-        Object.entries(opt.sc).forEach(([k, v]) => {
-          if (wfActual[k] !== undefined) wfActual[k] += v;
-        });
-      }
-      if (opt.bonus) {
-        Object.entries(opt.bonus).forEach(([k, v]) => {
-          if (wfActual[k] !== undefined) wfActual[k] += v;
-        });
-      }
-    });
-
-    ALL_SUBS.forEach(k => {
-      const achievable = wfMaxAchievable[k];
-      const totalMax   = wfTotalMax[k];
-      if (achievable > 0 && totalMax > 0) {
-        const ratio = wfActual[k] / achievable;
-        const rawWfScore = wfActual[k];
-        const correctedScore = ratio * totalMax;
-        st.sc[k] = st.sc[k] - rawWfScore + correctedScore;
-      }
-    });
+  // 주체질이 명확하면 2단계로, 애매하면 그대로 2단계 (확정 없이)
+  if (diff >= 4) {
+    st.confirmedMain = sorted[0].m;
+  } else {
+    // 상위 두 체질 모두 2단계에 포함
+    st.confirmedMain = null;
   }
 
-  ALL_SUBS.forEach(k => { st.sc[k] = Math.max(0, st.sc[k]); });
+  st.phase = 2; st.qi = 0; render();
+}
 
-  const sorted = ALL_SUBS.map(k => ({k, v:st.sc[k]})).sort((a,b) => b.v - a.v);
+/* ── 2단계 계산: 계열 확정 ── */
+function calcFinal() {
+  // 2단계 답변 반영
+  const vqs = visibleQs();
+  vqs.forEach(q => {
+    const a = st.ans[q.id];
+    if (a === undefined) return;
+    let sc;
+    if (q.type === 'bool') {
+      sc = (a === 'yes' ? q.yes : q.no);
+      if (sc && sc.sub) applySubSc(sc.sub, q.weight);
+    } else {
+      const opt = q.opts[a];
+      if (!opt) return;
+      if (opt.sub) applySubSc(opt.sub, q.weight);
+    }
+  });
+
+  // 주체질 점수 기반 계열 점수 보정
+  // 1단계에서 확정된 주체질의 계열들에 보너스
+  MAINS.forEach(m => {
+    const bonus = st.mainSc[m] * 0.5;
+    MAIN_MAP[m].forEach(sub => { st.subSc[sub] += bonus; });
+  });
+
+  // 확정된 주체질이 있으면 다른 주체질 계열 대폭 감점
+  if (st.confirmedMain) {
+    ALL_SUBS.forEach(k => {
+      if (!k.startsWith(st.confirmedMain.slice(0,2))) {
+        // 단, 태음→태양 등 겹치는 글자 방지: 주체질 소속이 아닌 경우
+        const belongs = MAIN_MAP[st.confirmedMain].includes(k);
+        if (!belongs) st.subSc[k] -= 20;
+      }
+    });
+    // 소음인은 세 계열 모두 포함
+  }
+
+  ALL_SUBS.forEach(k => { st.subSc[k] = Math.max(0, st.subSc[k]); });
+
+  const sorted = ALL_SUBS.map(k => ({k, v:st.subSc[k]})).sort((a,b) => b.v - a.v);
   const top1 = sorted[0], top2 = sorted[1];
   const diff = top1.v - top2.v;
 
-  if (diff <= 5) {
-    if (diff >= 3) st.confirmedGrade = 'C';
-    else st.confirmedGrade = 'D';
-  } else {
-    st.confirmedGrade = null;
+  // 확신도 등급
+  if (diff >= 8) st.confirmedGrade = 'A';
+  else if (diff >= 4) st.confirmedGrade = 'B';
+  else if (diff >= 2) st.confirmedGrade = 'C';
+  else st.confirmedGrade = 'D';
+
+  if (diff > 3) {
+    st.result = top1.k; st.page = 'result'; render(); return;
   }
 
-  if (diff > 5) {
-    st.result = top1.k;
-    st.page = 'result';
-    render();
-    return;
-  }
-
+  // 동점 처리
   const tb = TBS.find(t =>
     (t.pair[0]===top1.k && t.pair[1]===top2.k) ||
     (t.pair[0]===top2.k && t.pair[1]===top1.k)
   );
-
   if (tb) {
     st.tb = {...tb, top1:top1.k, top2:top2.k};
-    st.page = 'tie';
-    render();
-    return;
+    st.page = 'tie'; render(); return;
   }
-
-  const physIds = ['h1','h2','h3','h4','h5','w1','w2','w3'];
-  const physScore = (key) => {
-    let s = 0;
-    vqs.forEach(q => {
-      if (!physIds.includes(q.id)) return;
-      const a = st.ans[q.id]; if (a===undefined) return;
-      if (q.type==='bool') {
-        const eff = (a==='yes'?q.yes:q.no);
-        if (eff&&eff.sc&&eff.sc[key]) s += eff.sc[key];
-      } else {
-        const opt = q.opts[a];
-        if (opt&&opt.sc&&opt.sc[key]) s += opt.sc[key];
-      }
-    });
-    return s;
-  };
-  const p1 = physScore(top1.k), p2 = physScore(top2.k);
-  if (p1 !== p2) {
-    st.result = p1 > p2 ? top1.k : top2.k;
-  } else {
-    const main1 = MAINS.find(m => top1.k.startsWith(m));
-    const main2 = MAINS.find(m => top2.k.startsWith(m));
-    st.result = (st.sc[main1]||0) >= (st.sc[main2]||0) ? top1.k : top2.k;
-  }
-  st.page = 'result';
-  render();
+  st.result = top1.k; st.page = 'result'; render();
 }
 
+function applyMainSc(scMap, weight) {
+  Object.entries(scMap).forEach(([k, v]) => {
+    if (st.mainSc[k] !== undefined) st.mainSc[k] += v * (weight/3);
+  });
+}
+function applySubSc(scMap, weight) {
+  Object.entries(scMap).forEach(([k, v]) => {
+    if (st.subSc[k] !== undefined) st.subSc[k] += v * (weight/3);
+  });
+}
+
+/* ── 타이브레이크 ── */
 function renderTie(a) {
   const tb = st.tb;
   const l1 = SUBS[tb.top1]?.label||tb.top1;
   const l2 = SUBS[tb.top2]?.label||tb.top2;
-  a.innerHTML = `<div class="tie-card">
-  <div class="tie-eye">최종 판정 질문</div>
-  <div class="tie-t">두 계열이 근소한 차이입니다</div>
-  <div class="tie-s">${l1} / ${l2}<br>추가 질문으로 최종 계열을 확정합니다.</div>
-  <div class="tie-q">${tb.q}</div>
-  <div class="opts">
-    <button class="opt" onclick="resolveTie(0)"><div class="odot"></div><span>${tb.a[0]}</span></button>
-    <button class="opt" onclick="resolveTie(1)"><div class="odot"></div><span>${tb.a[1]}</span></button>
+  a.innerHTML = `<div class="card"><div class="tie-wrap">
+    <div class="tie-eye">최종 판정 질문</div>
+    <div class="tie-t">두 계열이 근소한 차이입니다</div>
+    <div class="tie-s"><b>${l1}</b> / <b>${l2}</b><br>아래 질문으로 최종 계열을 확정합니다.</div>
+    <div class="tie-q">${tb.q}</div>
+    <div class="opts">
+      <button class="opt" onclick="resolveTie(0)"><div class="odot"></div><span>${tb.a[0]}</span></button>
+      <button class="opt" onclick="resolveTie(1)"><div class="odot"></div><span>${tb.a[1]}</span></button>
+    </div>
   </div></div>`;
 }
 
 function resolveTie(i) {
-  st.result = ALL_SUBS.includes(st.tb.w[i]) ? st.tb.w[i] : st.tb.top1;
-  st.page = 'result';
-  render();
+  st.result = st.tb.w[i]; st.confirmedGrade = 'B';
+  st.page = 'result'; render();
 }
 
+/* ── 결과 ── */
 function renderResult(a) {
   const rk = st.result;
   const d = SUBS[rk];
+  const col = d.color;
 
-  // ── 환자 응답 데이터 수집 ──────────────────────────────
+  // 데이터 전송
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzX6NouJw3s5evArwuxF1CDRWWnYNdGRng7iX0RlScckiy9F_7FfSC1B_74UII9HOdjhQ/exec';
-  fetch(SHEET_URL, {
-    method: 'POST',
-    body: JSON.stringify({
-      gender : st.gender,
-      result : st.result,
-      grade  : st.confirmedGrade || 'A',
-      scores : st.sc,
-      answers: st.ans
-    })
-  }).catch(() => {});
-  // ────────────────────────────────────────────────────
-  const col = MAIN_COL[d.main] || '#7A9E7E';
+  fetch(SHEET_URL,{method:'POST',body:JSON.stringify({
+    gender:st.gender, result:st.result, grade:st.confirmedGrade,
+    mainSc:st.mainSc, subSc:st.subSc, answers:st.ans
+  })}).catch(()=>{});
 
-  const sorted = ALL_SUBS.map(k=>({k,v:st.sc[k]})).sort((a,b)=>b.v-a.v);
-  const diff = sorted[0].v - sorted[1].v;
+  const confPct = {A:92,B:72,C:45,D:20}[st.confirmedGrade]||50;
+  const confMsg = {A:'매우 높음',B:'높음',C:'보통',D:'혼합형'}[st.confirmedGrade];
 
-  let grade, gaugePercent, gaugeColor, gradeMsg, gradeSub;
-  const effectiveGrade = st.confirmedGrade || null;
-
-  if (effectiveGrade === 'C') {
-    grade='C'; gaugePercent=40; gaugeColor='#C8B89A';
-    gradeMsg='진단 확신도: 보통'; gradeSub='두 계열의 특성이 혼재되어 있습니다.';
-  } else if (effectiveGrade === 'D') {
-    grade='D'; gaugePercent=15; gaugeColor='#E8A87C';
-    gradeMsg='진단 확신도: 혼합형'; gradeSub='추가 면담이 필요합니다.';
-  } else {
-    if (diff >= 10) {
-      grade='A'; gaugePercent=90; gaugeColor='#4E7053';
-      gradeMsg='진단 확신도: 매우 높음'; gradeSub='체질 특성이 뚜렷하게 나타났습니다.';
-    } else if (diff >= 6) {
-      grade='B'; gaugePercent=70; gaugeColor='#7A9E7E';
-      gradeMsg='진단 확신도: 높음'; gradeSub='체질 특성이 비교적 명확하게 나타났습니다.';
-    } else if (diff >= 3) {
-      grade='C'; gaugePercent=40; gaugeColor='#C8B89A';
-      gradeMsg='진단 확신도: 보통'; gradeSub='두 계열의 특성이 혼재되어 있습니다.';
-    } else {
-      grade='D'; gaugePercent=15; gaugeColor='#E8A87C';
-      gradeMsg='진단 확신도: 혼합형'; gradeSub='추가 면담이 필요합니다.';
-    }
-  }
-
-  const arcSvg = buildArcGauge(gaugePercent, gaugeColor, grade);
-  const emblemSvg = buildEmblem(d.animal, col);
-
+  const sorted = ALL_SUBS.map(k=>({k,v:st.subSc[k]})).sort((a,b)=>b.v-a.v);
   const top6 = sorted.slice(0,6);
   const mx = top6[0].v || 1;
   const bars = top6.map(it => {
     const pct = Math.round((it.v/mx)*100);
     const isTop = it.k === rk;
+    const c = isTop ? col : '#C8B89A';
     return `<div class="sc-row">
-    <div class="sc-nm" style="${isTop?'font-weight:600;color:'+col:''}">${SUBS[it.k]?.label||it.k}</div>
-    <div class="sc-tr"><div class="sc-fi" style="width:${pct}%;background:${isTop?col:'#C8B89A'}"></div></div>
-    <div class="sc-vl" style="color:${isTop?col:'var(--text-light)'}">${it.v.toFixed(1)}</div></div>`;
+      <div class="sc-nm" style="${isTop?'font-weight:600;color:'+col:''}">${SUBS[it.k]?.label||it.k}</div>
+      <div class="sc-tr"><div class="sc-fi" style="width:${pct}%;background:${c}"></div></div>
+      <div class="sc-vl" style="color:${isTop?col:'var(--ink-faint)'}">${it.v.toFixed(1)}</div>
+    </div>`;
   }).join('');
 
-  const healthItems = d.healthy.map(s=>`<div class="h-item"><span class="h-dot">✓</span><span>${s}</span></div>`).join('');
-  const warnItems = d.warning.map(s=>`<div class="w-item"><span class="w-dot">⚠</span><span>${s}</span></div>`).join('');
-  const specs = d.special.map(s=>`<div class="sp-item"><span class="sp-dot">·</span><span>${s}</span></div>`).join('');
+  const healthItems = d.healthy.map(s=>`<div class="ib-item"><span class="ib-dot" style="color:${col}">✓</span><span>${s}</span></div>`).join('');
+  const warnItems  = d.warning.map(s=>`<div class="ib-item"><span class="ib-dot" style="color:#9E5A3A">⚠</span><span>${s}</span></div>`).join('');
+  const specItems  = d.special.map(s=>`<div class="sp-item"><span class="sp-dot">·</span><span>${s}</span></div>`).join('');
 
-  a.innerHTML = `<div class="res-wrap">
-  <div class="res-gauge-section">
-    ${arcSvg}
-    <div class="gauge-grade" style="color:${gaugeColor}">${gradeMsg}</div>
-    <div class="gauge-msg">${grade}등급</div>
-    <div class="gauge-sub">${gradeSub}</div>
-  </div>
+  // 주체질 점수 바
+  const mainSorted = MAINS.map(m=>({m,v:st.mainSc[m]})).sort((a,b)=>b.v-a.v);
+  const mxMain = mainSorted[0].v || 1;
+  const mainBars = mainSorted.map(it => {
+    const pct = Math.round((it.v/mxMain)*100);
+    const isTop = d.main === it.m;
+    const mc = {'태음인':col,'소양인':'#9E5A3A','소음인':'#3A5A8A','태양인':'#6A7040'}[it.m]||col;
+    return `<div class="sc-row">
+      <div class="sc-nm" style="${isTop?'font-weight:600;color:'+mc:''}">${it.m}</div>
+      <div class="sc-tr"><div class="sc-fi" style="width:${pct}%;background:${isTop?mc:'#C8B89A'}"></div></div>
+      <div class="sc-vl" style="color:${isTop?mc:'var(--ink-faint)'}">${it.v.toFixed(1)}</div>
+    </div>`;
+  }).join('');
 
-  <div class="res-emblem-section">
-    <div class="emblem-wrap">${emblemSvg}</div>
-    <div class="res-main-type" style="color:${col}">${d.main}</div>
-    <div class="res-sub-type">${d.fullLabel}</div>
-    <div class="res-hanja">${d.hanja}</div>
-    <div class="res-desc">${d.desc}</div>
-  </div>
-
-  <div class="score-section">
-    <div class="sec-l">계열별 점수 분포 (상위 6위)</div>${bars}
-  </div>
-
-  <div class="cards-row">
-    <div class="info-card">
-      <div class="card-title">완실무병의 조건</div>
-      ${healthItems}
-      <div style="height:10px"></div>
-      <div style="font-size:10px;letter-spacing:1px;color:var(--text-light);margin-bottom:8px">위기 징후</div>
-      ${warnItems}
+  a.innerHTML = `<div class="card res-hero">
+    <div class="res-banner" style="background:${d.bg}">
+      <div class="res-main-lbl">${d.main} · ${d.hanja}</div>
+      <div class="res-type-name">${d.label}</div>
+      <div class="res-hanja">${d.fullLabel}</div>
     </div>
-    <div class="info-card">
-      <div class="card-title" style="color:#8B4A3A">체질별 득(得)과 실(失)</div>
-      <div class="food-grid">
-        <div class="food-card good">
-          <div class="fc-t">✓ 이로운 음식</div>
-          <div class="ftags">${d.good.map(f=>`<span class="ftag">${f}</span>`).join('')}</div>
-        </div>
-        <div class="food-card bad">
-          <div class="fc-t">✗ 금기 음식</div>
-          <div class="ftags">${d.bad.map(f=>`<span class="ftag">${f}</span>`).join('')}</div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+  <div class="res-body">
+    <div class="res-sec-l">진단 확신도</div>
+    <div class="conf-row">
+      <div class="conf-lbl">${st.confirmedGrade}등급</div>
+      <div class="conf-bar-w"><div class="conf-bar-f" style="width:${confPct}%;background:${col}"></div></div>
+      <div class="conf-pct" style="color:${col}">${confPct}%</div>
+      <div class="conf-lbl">${confMsg}</div>
+    </div>
+    <div class="res-desc">${d.desc}</div>
+
+    <div class="res-sec-l" style="margin-top:20px">주체질 점수 분포</div>
+    <div class="score-bars" style="margin-bottom:20px">${mainBars}</div>
+
+    <div class="res-sec-l">계열별 점수 분포 (상위 6)</div>
+    <div class="score-bars" style="margin-bottom:20px">${bars}</div>
+
+    <div class="two-col">
+      <div class="info-box">
+        <div class="ib-t">완실무병의 조건</div>${healthItems}
+        <div style="height:8px"></div>
+        <div style="font-size:10px;letter-spacing:1px;color:var(--ink-faint);margin:8px 0 6px">위기 징후</div>
+        ${warnItems}
+      </div>
+      <div class="info-box">
+        <div class="ib-t">음식 득(得)과 실(失)</div>
+        <div class="food-grid">
+          <div class="food-box good"><div class="fb-t">✓ 이로운 음식</div><div class="ftags">${d.good.map(f=>`<span class="ftag">${f}</span>`).join('')}</div></div>
+          <div class="food-box bad"><div class="fb-t">✗ 금기 음식</div><div class="ftags">${d.bad.map(f=>`<span class="ftag">${f}</span>`).join('')}</div></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="sp-section">
-    <div class="sec-l">생활 관리 포인트</div>${specs}
-  </div>
+    <div class="sp-box">
+      <div class="res-sec-l">생활 관리 포인트</div>${specItems}
+    </div>
 
-  <button class="btn-r" onclick="restart()">↩ 처음으로 돌아가기</button>
-  <div class="disc">⚕ 본 진단은 참고용이며 정확한 체질 판정은 반드시 한의사의 진료를 받으시기 바랍니다.<br>동일 환자라도 상태에 따라 계열이 달라 보일 수 있으므로 임상 전문가의 확인이 필요합니다.</div>
-  </div>`;
-}
+    <button class="btn-restart" onclick="restart()">↩ 처음으로 돌아가기</button>
+    <p class="res-disc">⚕ 본 진단은 참고용입니다. 정확한 체질 판정은 반드시 한의사의 진료를 받으시기 바랍니다.</p>
+  </div></div>`;
 
-function buildArcGauge(pct, color, grade) {
-  const r = 80, cx = 120, cy = 110;
-  const startAngle = Math.PI;
-  const endAngle = Math.PI + (pct / 100) * Math.PI;
-  const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
-  const x2 = cx + r * Math.cos(endAngle),   y2 = cy + r * Math.sin(endAngle);
-  const large = pct > 50 ? 1 : 0;
-  const needleAngle = Math.PI + (pct / 100) * Math.PI;
-  const nx = cx + (r-8) * Math.cos(needleAngle), ny = cy + (r-8) * Math.sin(needleAngle);
-  return `<svg viewBox="0 0 240 120" width="240" height="120" style="overflow:visible;margin:0 auto;display:block">
-    <path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none" stroke="#E8DFD0" stroke-width="14" stroke-linecap="round"/>
-    <path d="M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round"/>
-    <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="${cx}" cy="${cy}" r="5" fill="${color}"/>
-    <text x="${cx}" y="${cy}" text-anchor="middle" font-size="22" font-weight="600" fill="${color}" font-family="Noto Serif KR,serif" dy="-14">${grade}</text>
-  </svg>`;
-}
-
-function buildEmblem(animal, col) {
-  const emojis = {
-    'cat-scarf':'🧣🐱','cat-thunder':'⚡🐱','cat-ice':'🧊🐱',
-    'bear-snow':'❄️🐻','bear-fire':'🔥🐻',
-    'collie-shoes':'🧦🐕','collie-wave':'🌊🐕',
-    'eagle-mountain':'⛰️🦅','eagle-leaf':'🌿🦅'
-  };
-  const label = emojis[animal] || '🌿';
-  return `<div style="width:100px;height:100px;background:linear-gradient(135deg,${col}22,${col}11);border:1.5px solid ${col}44;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto">${label}</div>`;
+  // 애니메이션
+  setTimeout(() => {
+    document.querySelectorAll('.conf-bar-f, .sc-fi').forEach(el => {
+      const w = el.style.width; el.style.width='0%';
+      setTimeout(() => el.style.width = w, 50);
+    });
+  }, 100);
 }
 
 function restart() {
-  st = {
-    page:'gender', gender:null, qi:0, ans:{},
-    penaltyMap:{}, sc:{}, result:null, tb:null,
-    confirmedGrade:null
-  };
-  initSc();
-  render();
+  st = {page:'start',gender:null,phase:1,qi:0,ans:{},mainSc:{},subSc:{},
+        confirmedMain:null,result:null,tb:null,confirmedGrade:null};
+  initSc(); render();
+}
+
+/* ══════════════════════════════════════════════════════
+   SVG 시각화 함수
+══════════════════════════════════════════════════════ */
+
+/* 굵기 비교 — 실제 동전 크기 비율로 표현 */
+function buildStoolWidthViz() {
+  /* 실제 동전 직경: 500원=26.5mm, 100원=24mm, 50원=21.6mm
+     대변 단면을 동전으로 직관적 비교.
+     SVG 내 비율: 500원 r=33, 100원 r=30, 50원 r=27 */
+
+  // 동전 색상 (금속 느낌, 황토와 구분)
+  const C500 = '#B8A060'; // 500원 골드
+  const C100 = '#C0C0C0'; // 100원 실버
+  const C50  = '#C8A860'; // 50원 브론즈
+  const SH   = 'rgba(0,0,0,0.08)'; // 그림자
+
+  return `<div style="background:var(--paper);border-radius:12px;padding:18px 16px 16px;margin-bottom:18px;border:1px solid var(--paper-dark)">
+  <div style="font-size:10px;letter-spacing:1.5px;color:var(--ink-faint);margin-bottom:4px;text-align:center">단면 굵기 — 동전과 비교 (원전 2강 19항)</div>
+  <div style="font-size:11px;color:var(--ink-light);text-align:center;margin-bottom:12px">단면을 위에서 내려다봤을 때의 크기</div>
+  <svg viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;display:block;margin:0 auto">
+    <defs>
+      <!-- 동전 광택 그라디언트 -->
+      <radialGradient id="g500" cx="38%" cy="35%" r="60%">
+        <stop offset="0%" stop-color="#D4B870"/>
+        <stop offset="60%" stop-color="${C500}"/>
+        <stop offset="100%" stop-color="#907840"/>
+      </radialGradient>
+      <radialGradient id="g100" cx="38%" cy="35%" r="60%">
+        <stop offset="0%" stop-color="#E0E0E0"/>
+        <stop offset="60%" stop-color="${C100}"/>
+        <stop offset="100%" stop-color="#909090"/>
+      </radialGradient>
+      <radialGradient id="g50" cx="38%" cy="35%" r="60%">
+        <stop offset="0%" stop-color="#D8B870"/>
+        <stop offset="60%" stop-color="${C50}"/>
+        <stop offset="100%" stop-color="#987030"/>
+      </radialGradient>
+    </defs>
+
+    <!-- ── 소양인 / 500원 ── -->
+    <!-- 그림자 -->
+    <circle cx="103" cy="57" r="33" fill="${SH}"/>
+    <!-- 동전 본체 -->
+    <circle cx="100" cy="54" r="33" fill="url(#g500)"/>
+    <!-- 테두리 -->
+    <circle cx="100" cy="54" r="33" fill="none" stroke="#907840" stroke-width="1.2" opacity="0.5"/>
+    <!-- 안쪽 테두리 (동전 특유의 테) -->
+    <circle cx="100" cy="54" r="28" fill="none" stroke="#907840" stroke-width="0.8" opacity="0.25"/>
+    <!-- 광택 하이라이트 -->
+    <ellipse cx="90" cy="44" rx="9" ry="5" fill="white" opacity="0.22"/>
+    <!-- 텍스트: 동전 -->
+    <text x="100" y="57" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#705830" font-family="Noto Sans KR,sans-serif" font-weight="600" opacity="0.7">500원</text>
+    <!-- 라벨 -->
+    <text x="100" y="101" text-anchor="middle" font-size="12" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">굵음</text>
+    <text x="100" y="114" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">500원 동전 이상</text>
+    <text x="100" y="126" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">짧게 뚝뚝 끊겨 나옴</text>
+
+    <!-- ── 소음인 / 100원 ── -->
+    <circle cx="243" cy="57" r="30" fill="${SH}"/>
+    <circle cx="240" cy="54" r="30" fill="url(#g100)"/>
+    <circle cx="240" cy="54" r="30" fill="none" stroke="#888" stroke-width="1.2" opacity="0.5"/>
+    <circle cx="240" cy="54" r="25" fill="none" stroke="#888" stroke-width="0.8" opacity="0.25"/>
+    <ellipse cx="230" cy="44" rx="8" ry="4.5" fill="white" opacity="0.22"/>
+    <text x="240" y="57" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#585858" font-family="Noto Sans KR,sans-serif" font-weight="600" opacity="0.7">100원</text>
+    <text x="240" y="101" text-anchor="middle" font-size="12" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">중간</text>
+    <text x="240" y="114" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">100원 동전 정도</text>
+    <text x="240" y="126" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">길게 이어짐</text>
+
+    <!-- ── 태음인 / 50원 ── -->
+    <circle cx="383" cy="57" r="27" fill="${SH}"/>
+    <circle cx="380" cy="54" r="27" fill="url(#g50)"/>
+    <circle cx="380" cy="54" r="27" fill="none" stroke="#987030" stroke-width="1.2" opacity="0.5"/>
+    <circle cx="380" cy="54" r="22" fill="none" stroke="#987030" stroke-width="0.8" opacity="0.25"/>
+    <ellipse cx="371" cy="45" rx="7" ry="4" fill="white" opacity="0.22"/>
+    <text x="380" y="57" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#705830" font-family="Noto Sans KR,sans-serif" font-weight="600" opacity="0.7">50원</text>
+    <text x="380" y="101" text-anchor="middle" font-size="12" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">가늠</text>
+    <text x="380" y="114" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">50원~100원 동전 사이</text>
+    <text x="380" y="126" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">가늘고 형태 다양</text>
+
+    <!-- 비교 화살표 -->
+    <text x="170" y="58" text-anchor="middle" font-size="18" fill="#D8CEBC" font-family="sans-serif">›</text>
+    <text x="315" y="58" text-anchor="middle" font-size="18" fill="#D8CEBC" font-family="sans-serif">›</text>
+
+  </svg>
+  </div>`;
+}
+
+/* 굳기·형태 비교 — 가로 막대형 */
+function buildStoolShapeViz() {
+  const CD = '#B8845A'; // 짙음(단단)
+  const CM = '#CEAA82'; // 중간
+  const CL = '#E0C8A4'; // 연함(묽음)
+
+  return `<div style="background:var(--paper);border-radius:12px;padding:18px 16px 14px;margin-bottom:18px;border:1px solid var(--paper-dark)">
+  <div style="font-size:10px;letter-spacing:1.5px;color:var(--ink-faint);margin-bottom:14px;text-align:center">형태·굳기 비교 (짙을수록 단단, 연할수록 묽음)</div>
+  <svg viewBox="0 0 460 172" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;display:block;margin:0 auto">
+
+    <!-- 레이블 공통 스타일: x=8 -->
+
+    <!-- ① 처음 단단, 끝 풀림 -->
+    <text x="8" y="20" font-size="11" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">① 처음 단단 → 끝 매끄럽게 풀림</text>
+    <text x="8" y="32" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">앞부분 단단 → 끝부분 매끄럽게 풀림</text>
+    <!-- 앞 단단한 부분 -->
+    <rect x="150" y="26" width="72" height="20" rx="10" fill="${CD}" opacity="0.9"/>
+    <!-- 뒷부분 점진적으로 연해지며 가늘어짐 -->
+    <path d="M222 26 C250 26 285 31 310 36 C285 41 250 46 222 46 Z" fill="${CM}" opacity="0.75"/>
+    <line x1="8" y1="58" x2="452" y2="58" stroke="#EDE6D8" stroke-width="1"/>
+
+    <!-- ② 처음부터 끝까지 균일하고 길게 -->
+    <text x="8" y="76" font-size="11" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">② 처음부터 끝까지 균일하고 길게</text>
+    <text x="8" y="88" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">처음부터 끝까지 균일하고 길게</text>
+    <rect x="150" y="78" width="210" height="16" rx="8" fill="${CM}" opacity="0.9"/>
+    <line x1="8" y1="110" x2="452" y2="110" stroke="#EDE6D8" stroke-width="1"/>
+
+    <!-- ③ 처음 약간 단단, 뒤로 갈수록 살짝 풀어짐 -->
+    <text x="8" y="128" font-size="11" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">③ 처음 약간 단단 → 뒤로 갈수록 살짝 풀어짐</text>
+    <text x="8" y="140" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">앞부분 약간 단단 → 뒤로 갈수록 살짝 풀어짐</text>
+    <rect x="150" y="128" width="55" height="14" rx="7" fill="${CM}" opacity="0.85"/>
+    <path d="M205 128 C230 128 275 132 305 135 C275 142 230 142 205 142 Z" fill="${CL}" opacity="0.7"/>
+
+    <!-- 길이 참고선 -->
+    <line x1="150" y1="162" x2="360" y2="162" stroke="#D8CEBC" stroke-width="1" stroke-dasharray="3,3"/>
+    <text x="255" y="172" text-anchor="middle" font-size="10" fill="#BDB3A8" font-family="Noto Sans KR,sans-serif">← 상대적 길이 참고 →</text>
+
+  </svg>
+  </div>`;
+}
+
+/* 늑골각 비교 SVG */
+function buildCostalViz() {
+  return `<div style="background:var(--paper);border-radius:12px;padding:14px 12px 10px;margin-bottom:18px;border:1px solid var(--paper-dark)">
+  <div style="font-size:10px;letter-spacing:1.5px;color:var(--ink-faint);margin-bottom:10px;text-align:center">갈비뼈 벌어짐 각도 비교</div>
+  <svg viewBox="0 0 680 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:0 auto">
+
+    <!-- 왼쪽: 둔각 (cx=113) -->
+    <path d="M43 58 Q16 95 26 148 Q46 178 113 182 Q180 178 200 148 Q210 95 183 58 Q158 38 113 36 Q68 38 43 58Z"
+          fill="#F0EDE6" stroke="#C8B89A" stroke-width="1.2"/>
+    <line x1="113" y1="118" x2="58"  y2="158" stroke="#5A4A38" stroke-width="2" stroke-linecap="round"/>
+    <line x1="113" y1="118" x2="168" y2="158" stroke="#5A4A38" stroke-width="2" stroke-linecap="round"/>
+    <path d="M74 148 Q113 128 152 148" fill="none" stroke="#9E5A3A" stroke-width="1.5"/>
+    <text x="113" y="144" text-anchor="middle" font-size="10" fill="#9E5A3A" font-family="Noto Sans KR,sans-serif" font-weight="500">둔각</text>
+    <text x="113" y="18"  text-anchor="middle" font-size="12" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">넓게 벌어짐</text>
+    <text x="113" y="200" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">윗배가 풍만한 느낌</text>
+
+    <!-- 가운데: 직각 (cx=340) -->
+    <path d="M278 60 Q254 94 262 146 Q278 174 340 178 Q402 174 418 146 Q426 94 402 60 Q378 44 340 42 Q302 44 278 60Z"
+          fill="#F0EDE6" stroke="#C8B89A" stroke-width="1.2"/>
+    <line x1="340" y1="114" x2="302" y2="152" stroke="#5A4A38" stroke-width="2" stroke-linecap="round"/>
+    <line x1="340" y1="114" x2="378" y2="152" stroke="#5A4A38" stroke-width="2" stroke-linecap="round"/>
+    <path d="M313 149 L313 136 L326 136" fill="none" stroke="#9E5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="340" y="144" text-anchor="middle" font-size="10" fill="#9E5A3A" font-family="Noto Sans KR,sans-serif" font-weight="500">직각</text>
+    <text x="340" y="18"  text-anchor="middle" font-size="12" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">직각으로 벌어짐</text>
+    <text x="340" y="200" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">직각에 가까운 느낌</text>
+
+    <!-- 오른쪽: 예각 (cx=567) -->
+    <path d="M537 58 Q524 90 528 140 Q538 168 567 172 Q596 168 606 140 Q610 90 597 58 Q584 44 567 42 Q550 44 537 58Z"
+          fill="#F0EDE6" stroke="#C8B89A" stroke-width="1.2"/>
+    <line x1="567" y1="112" x2="551" y2="158" stroke="#5A4A38" stroke-width="2" stroke-linecap="round"/>
+    <line x1="567" y1="112" x2="583" y2="158" stroke="#5A4A38" stroke-width="2" stroke-linecap="round"/>
+    <path d="M556 150 Q567 136 578 150" fill="none" stroke="#9E5A3A" stroke-width="1.5"/>
+    <text x="567" y="144" text-anchor="middle" font-size="10" fill="#9E5A3A" font-family="Noto Sans KR,sans-serif" font-weight="500">예각</text>
+    <text x="567" y="18"  text-anchor="middle" font-size="12" fill="#5A4A38" font-family="Noto Sans KR,sans-serif" font-weight="600">좁게 모임 (V자)</text>
+    <text x="567" y="200" text-anchor="middle" font-size="10" fill="#9B8B7E" font-family="Noto Sans KR,sans-serif">날카롭게 파인 느낌</text>
+
+  </svg>
+  </div>`;
 }
 
 render();
